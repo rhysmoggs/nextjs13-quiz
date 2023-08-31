@@ -5,13 +5,9 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        {/* <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p> */}
         <div>
           <h1 className={styles.heading}>
-            <a href='#' target='_blank' rel='noopener noreferrer'>
+            <a href='#' rel='noopener noreferrer'>
               <Image
                 src='/logo.png'
                 alt='Globe Trotters Logo'
@@ -27,14 +23,9 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src='/next.svg'
-          alt='Next.js Logo'
-          width={180}
-          height={37}
-          priority
-        />
+        <h2>Progress Bar</h2>
+        <h2>Score</h2>
+        <h2>Question</h2>
       </div>
 
       <div className={styles.grid}>
