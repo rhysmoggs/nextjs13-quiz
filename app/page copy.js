@@ -5,24 +5,26 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        {/* <p>
+        <p>
           Get started by editing&nbsp;
           <code className={styles.code}>app/page.js</code>
-        </p> */}
+        </p>
         <div>
-          <h1 className={styles.heading}>
-            <a href='#' target='_blank' rel='noopener noreferrer'>
-              <Image
-                src='/logo.png'
-                alt='Globe Trotters Logo'
-                className={styles.globeLogo}
-                width={220}
-                height={220}
-                priority
-              />
-            </a>
-            <span className={styles.span}>Globe Trotter Quiz</span>
-          </h1>
+          <a
+            href='https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            By{' '}
+            <Image
+              src='/vercel.svg'
+              alt='Vercel Logo'
+              className={styles.vercelLogo}
+              width={100}
+              height={24}
+              priority
+            />
+          </a>
         </div>
       </div>
 
@@ -44,6 +46,9 @@ export default function Home() {
           target='_blank'
           rel='noopener noreferrer'
         >
+          <h2>
+            Docs <span>-&gt;</span>
+          </h2>
           <p>Find in-depth information about Next.js features and API.</p>
         </a>
 
@@ -53,6 +58,9 @@ export default function Home() {
           target='_blank'
           rel='noopener noreferrer'
         >
+          <h2>
+            Learn <span>-&gt;</span>
+          </h2>
           <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
         </a>
 
@@ -62,6 +70,9 @@ export default function Home() {
           target='_blank'
           rel='noopener noreferrer'
         >
+          <h2>
+            Templates <span>-&gt;</span>
+          </h2>
           <p>Explore the Next.js 13 playground.</p>
         </a>
 
@@ -71,6 +82,9 @@ export default function Home() {
           target='_blank'
           rel='noopener noreferrer'
         >
+          <h2>
+            Deploy <span>-&gt;</span>
+          </h2>
           <p>
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>

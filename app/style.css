@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+:root {
+  --background-color: black;
+  --text-primary-color: white;
+  --text-secondary-color: black;
+  --font-primary: 'Poppins', sans-serif;
+  --font-secondary: 'Abril Fatface', serif;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: var(--font-primary);
+  color: var(--text-primary-color);
+}
+
+.layout {
+  background-image: linear-gradient(
+      rgba(241, 236, 236, 0.3),
+      rgba(0, 0, 0, 0.7)
+    ),
+    url('../public/pexels-irina-iriser-1366957.jpg');
+  /* background: var(--background-color); */
+  background-position: 0 0;
+  background-size: cover;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  margin: 0 auto;
+  width: 80%;
+  background: grey;
+  height: 60vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.question-container {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  background: purple;
+}
