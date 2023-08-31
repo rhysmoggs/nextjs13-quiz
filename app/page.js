@@ -1,10 +1,42 @@
+'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
+  const [questions, setQuestions] = useState([])
+
+  const getQuizAPI = async () => {
+    fetch(
+      'https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple'
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setQuestions(data.results)
+        console.log(data.results)
+      })
+  }
+
+  // useEffect(() => {
+  //   getQuizAPI()
+  // }, [])
+
+  // useEffect(() => {
+  //   async function getQuizAPI() {
+  //     const response = await fetch('https://opentdb.com/api.php?amount=10')
+  //     const data = await response.json()
+  //     setQuestions(data)
+  //   }
+  //   getQuizAPI()
+  //   console.log(questions)
+  // }, [])
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
+        <button onClick={getQuizAPI} className={styles.btn}>
+          Generate
+        </button>
         <div>
           <h1 className={styles.heading}>
             <a href='#' rel='noopener noreferrer'>
@@ -24,6 +56,11 @@ export default function Home() {
 
       <div className={styles.center}>
         <h2>Progress Bar</h2>
+        <ul>
+          {questions.map((q, index) => {
+            return <li key={index}>{q.question}</li>
+          })}
+        </ul>
         <h2>Score</h2>
         <h2>Question</h2>
       </div>
@@ -32,7 +69,6 @@ export default function Home() {
         <a
           href='https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
           className={styles.card}
-          target='_blank'
           rel='noopener noreferrer'
         >
           <p>Find in-depth information about Next.js features and API.</p>
@@ -41,7 +77,6 @@ export default function Home() {
         <a
           href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
           className={styles.card}
-          target='_blank'
           rel='noopener noreferrer'
         >
           <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
@@ -50,7 +85,6 @@ export default function Home() {
         <a
           href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
           className={styles.card}
-          target='_blank'
           rel='noopener noreferrer'
         >
           <p>Explore the Next.js 13 playground.</p>
@@ -59,7 +93,6 @@ export default function Home() {
         <a
           href='https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
           className={styles.card}
-          target='_blank'
           rel='noopener noreferrer'
         >
           <p>

@@ -87,6 +87,11 @@
   margin-top: 1.2rem;
 }
 
+.btn {
+  margin: 2rem;
+  padding: 1rem 2.3rem;
+}
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
