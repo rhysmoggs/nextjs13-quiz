@@ -1,25 +1,41 @@
 'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function Home() {
-  const [questions, setQuestions] = useState([])
+  const [question, setQuestion] = useState([])
+  // const [answers, setAnswers] = useState([])
 
   const getQuizAPI = async () => {
-    fetch(
+    const response = await fetch(
       'https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple'
     )
-      .then((response) => response.json())
-      .then((data) => {
-        setQuestions(data.results)
-        console.log(data.results)
-      })
+    const data = await response.json()
+    const questions = data.results.map((question) => {
+      const newQuestion = {
+        question: question.question,
+        correct_answer: question.correct_answer,
+        incorrect_answers: question.incorrect_answers,
+      }
+      return newQuestion
+    })
+    const randomProperty = (newQuestion) => {
+      var keys = Object.keys(newQuestion)
+      return newQuestion[keys[(keys.length * Math.random()) << 0]]
+    }
+
+    const randomQ = randomProperty(questions)
+    // console.log(randomQ)
+
+    setQuestion(randomQ)
   }
 
-  // useEffect(() => {
-  //   getQuizAPI()
-  // }, [])
+  const handleClickEvent = () => {
+    getQuizAPI()
+  }
+
+  // getQuestion(question)
 
   // useEffect(() => {
   //   async function getQuizAPI() {
@@ -34,7 +50,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <button onClick={getQuizAPI} className={styles.btn}>
+        <button onClick={handleClickEvent} className={styles.btn}>
           Generate
         </button>
         <div>
@@ -57,10 +73,22 @@ export default function Home() {
       <div className={styles.center}>
         <h2>Progress Bar</h2>
         <ul>
-          {questions.map((q, index) => {
-            return <li key={index}>{q.question}</li>
-          })}
+          <li>{question.question}</li>
+          <li>{question.correct_answer}</li>
+          <li>{question.incorrect_answers}</li>
         </ul>
+        {/* <ul>
+          {question.map((q, index) => {
+            // console.log(q)
+            return (
+              <li key={index}>
+                {q.question}
+                {q.correct_answer}
+                {q.incorrect_answers}
+              </li>
+            )
+          })}
+        </ul> */}
         <h2>Score</h2>
         <h2>Question</h2>
       </div>
