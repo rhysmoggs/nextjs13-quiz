@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const [question, setQuestion] = useState([])
+  const [score, setScore] = useState(0)
   // const [answers, setAnswers] = useState([])
 
   const getQuizAPI = async () => {
@@ -26,7 +27,7 @@ export default function Home() {
     }
 
     const randomQ = randomProperty(questions)
-    // console.log(randomQ)
+    console.log(randomQ)
 
     setQuestion(randomQ)
   }
@@ -72,11 +73,6 @@ export default function Home() {
 
       <div className={styles.center}>
         <h2>Progress Bar</h2>
-        <ul>
-          <li>{question.question}</li>
-          <li>{question.correct_answer}</li>
-          <li>{question.incorrect_answers}</li>
-        </ul>
         {/* <ul>
           {question.map((q, index) => {
             // console.log(q)
@@ -89,44 +85,26 @@ export default function Home() {
             )
           })}
         </ul> */}
-        <h2>Score</h2>
-        <h2>Question</h2>
+        <h2>Score {score}</h2>
+        <h2>{question.question}</h2>
       </div>
 
       <div className={styles.grid}>
-        <a
-          href='https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
-          className={styles.card}
-          rel='noopener noreferrer'
-        >
-          <p>Find in-depth information about Next.js features and API.</p>
+        <a href='#' className={styles.card} rel='noopener noreferrer'>
+          <p>{question.correct_answer}</p>
         </a>
-
-        <a
-          href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
-          className={styles.card}
-          rel='noopener noreferrer'
-        >
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
-          className={styles.card}
-          rel='noopener noreferrer'
-        >
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href='https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
-          className={styles.card}
-          rel='noopener noreferrer'
-        >
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+        {question.incorrect_answers?.map((q, index) => {
+          return (
+            <a
+              key={index}
+              href='#'
+              className={styles.card}
+              rel='noopener noreferrer'
+            >
+              <p>{q}</p>
+            </a>
+          )
+        })}
       </div>
     </main>
   )
