@@ -14,6 +14,7 @@ export default function Home() {
   const [activeQuestion, setActiveQuestion] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [score, setScore] = useState(0)
   const [started, setStarted] = useState(false)
 
   //fetch api data:
@@ -63,11 +64,12 @@ export default function Home() {
   }
 
   //check if answer is correct or not:
-  //this works but is very buggy:
+  //this works but is very buggy and can sometimes return wrong answer:
   const givenAnswer = (e) => {
     const btnTxt = e.target.innerHTML
     if (btnTxt === activeQuestion.correct_answer) {
       console.log('yeeee buddy!')
+      setScore(score + 1)
     } else {
       console.log('nahhh')
     }
@@ -119,7 +121,7 @@ export default function Home() {
             <h2>
               Progress Bar: {progress} / {totalQuestions}
             </h2>
-            <h2>Score</h2>
+            <h2>Score {score}</h2>
             <button onClick={newQuestion} className={styles.btn}>
               Next Question
             </button>
