@@ -3,57 +3,70 @@ import Image from 'next/image'
 import styles from './page.module.css'
 import { useState } from 'react'
 
-export default function Home() {
-  const [question, setQuestion] = useState([])
-  const [score, setScore] = useState(0)
-  // const [answers, setAnswers] = useState([])
+// 1. gather 10 Qs from API
+// 2. randomize order of 10 Qs = ? dont need to
+// 3. setQuestion(results of randomization) = ? dont need to
 
+// 4. go through list of questions(state) one by one and show on DOM
+
+export default function Home() {
+  const [questions, setQuestions] = useState([])
+  const [activeQuestion, setActiveQuestion] = useState([])
+
+  //fetch api data:
   const getQuizAPI = async () => {
     const response = await fetch(
       'https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple'
     )
     const data = await response.json()
-    const questions = data.results.map((question) => {
-      const newQuestion = {
-        question: question.question,
-        correct_answer: question.correct_answer,
-        incorrect_answers: question.incorrect_answers,
-      }
-      return newQuestion
-    })
-    const randomProperty = (newQuestion) => {
-      var keys = Object.keys(newQuestion)
-      return newQuestion[keys[(keys.length * Math.random()) << 0]]
-    }
+    const questions = data.results
 
-    const randomQ = randomProperty(questions)
-    console.log(randomQ)
+    // console.log(questions)
 
-    setQuestion(randomQ)
+    //function to return single random question, correct_answer and incorrect_answer:
+    // const randomQuestionFunction = (newQuestion) => {
+    //   var keys = Object.keys(newQuestion)
+    //   return newQuestion[keys[(keys.length * Math.random()) << 0]]
+    // }
+    // const randomQuestion = randomQuestionFunction(questions)
+    // console.log(randomQuestion)
+
+    setQuestions(questions)
+    console.log(questions)
   }
 
-  const handleClickEvent = () => {
+  //start game and generate 10 questions:
+  const startGame = () => {
+    //get 10 questions:
     getQuizAPI()
   }
 
-  // getQuestion(question)
+  //function to return single random question and answers (but can show duplicate questions):
+  // const newQuestion = () => {
+  //   var keys = Object.keys(questions)
+  //   const randomQuestion = questions[keys[(keys.length * Math.random()) << 0]]
+  //   setActiveQuestion(randomQuestion)
+  //   console.log(activeQuestion)
+  // }
 
-  // useEffect(() => {
-  //   async function getQuizAPI() {
-  //     const response = await fetch('https://opentdb.com/api.php?amount=10')
-  //     const data = await response.json()
-  //     setQuestions(data)
-  //   }
-  //   getQuizAPI()
-  //   console.log(questions)
-  // }, [])
+  const newQuestion = () => {
+    const newQ = questions[0]
+    setActiveQuestion(newQ)
+    console.log(activeQuestion)
+    const newList = questions.slice(1)
+    setQuestions(newList)
+    console.log(newList)
+
+    // var keys = Object.keys(questions)
+    // const randomQuestion = questions[keys[(keys.length * Math.random()) << 0]]
+    // setActiveQuestion(randomQuestion)
+    // console.log(activeQuestion)
+    // setQuestions(newList)
+  }
 
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <button onClick={handleClickEvent} className={styles.btn}>
-          Generate
-        </button>
         <div>
           <h1 className={styles.heading}>
             <a href='#' rel='noopener noreferrer'>
@@ -72,7 +85,7 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
-        <h2>Progress Bar</h2>
+        <h2>Progress Bar:</h2>
         {/* <ul>
           {question.map((q, index) => {
             // console.log(q)
@@ -85,12 +98,19 @@ export default function Home() {
             )
           })}
         </ul> */}
-        <h2>Score {score}</h2>
-        <h2>{question.question}</h2>
+        <button onClick={startGame} className={styles.btn}>
+          Start Game
+        </button>
+        <button onClick={newQuestion} className={styles.btn}>
+          Next Question
+        </button>
+        <h2>Score</h2>
+        {/* <h2>{question.question}</h2> */}
+        <h2>{activeQuestion.question}</h2>
       </div>
 
       <div className={styles.grid}>
-        <a href='#' className={styles.card} rel='noopener noreferrer'>
+        {/* <a href='#' className={styles.card} rel='noopener noreferrer'>
           <p>{question.correct_answer}</p>
         </a>
         {question.incorrect_answers?.map((q, index) => {
@@ -104,7 +124,7 @@ export default function Home() {
               <p>{q}</p>
             </a>
           )
-        })}
+        })} */}
       </div>
     </main>
   )
