@@ -12,6 +12,7 @@ import { useState } from 'react'
 export default function Home() {
   const [questions, setQuestions] = useState([])
   const [activeQuestion, setActiveQuestion] = useState([])
+  const [progress, setProgress] = useState(0)
 
   //fetch api data:
   const getQuizAPI = async () => {
@@ -23,7 +24,7 @@ export default function Home() {
 
     // console.log(questions)
 
-    //function to return single random question, correct_answer and incorrect_answer:
+    //function to return single random question, could be used to randomize answers in cards?:
     // const randomQuestionFunction = (newQuestion) => {
     //   var keys = Object.keys(newQuestion)
     //   return newQuestion[keys[(keys.length * Math.random()) << 0]]
@@ -32,7 +33,6 @@ export default function Home() {
     // console.log(randomQuestion)
 
     setQuestions(questions)
-    console.log(questions)
   }
 
   //start game and generate 10 questions:
@@ -50,19 +50,21 @@ export default function Home() {
   // }
 
   const newQuestion = () => {
-    const newQ = questions[0]
-    setActiveQuestion(newQ)
-    console.log(activeQuestion)
-    const newList = questions.slice(1)
-    setQuestions(newList)
-    console.log(newList)
-
-    // var keys = Object.keys(questions)
-    // const randomQuestion = questions[keys[(keys.length * Math.random()) << 0]]
-    // setActiveQuestion(randomQuestion)
-    // console.log(activeQuestion)
-    // setQuestions(newList)
+    if (progress === totalQuestions) {
+      console.log('end game')
+      //run end game function
+    } else {
+      const newQ = questions[0]
+      setActiveQuestion(newQ)
+      // console.log(activeQuestion)
+      const newList = questions.slice(1)
+      setQuestions(newList)
+      // console.log(newList)
+      setProgress(progress + 1)
+    }
   }
+
+  const totalQuestions = 10
 
   return (
     <main className={styles.main}>
@@ -85,7 +87,9 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
-        <h2>Progress Bar:</h2>
+        <h2>
+          Progress Bar: {progress} / {totalQuestions}{' '}
+        </h2>
         {/* <ul>
           {question.map((q, index) => {
             // console.log(q)
@@ -107,13 +111,15 @@ export default function Home() {
         <h2>Score</h2>
         {/* <h2>{question.question}</h2> */}
         <h2>{activeQuestion.question}</h2>
+        {/* <h2>{activeQuestion.correct_answer}</h2>
+        <h2>{activeQuestion.incorrect_answers}</h2> */}
       </div>
 
       <div className={styles.grid}>
-        {/* <a href='#' className={styles.card} rel='noopener noreferrer'>
-          <p>{question.correct_answer}</p>
+        <a href='#' className={styles.card} rel='noopener noreferrer'>
+          <p>{activeQuestion.correct_answer}</p>
         </a>
-        {question.incorrect_answers?.map((q, index) => {
+        {activeQuestion.incorrect_answers?.map((q, index) => {
           return (
             <a
               key={index}
@@ -124,7 +130,7 @@ export default function Home() {
               <p>{q}</p>
             </a>
           )
-        })} */}
+        })}
       </div>
     </main>
   )
