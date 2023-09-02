@@ -12,7 +12,9 @@ import { useState } from 'react'
 export default function Home() {
   const [questions, setQuestions] = useState([])
   const [activeQuestion, setActiveQuestion] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [started, setStarted] = useState(false)
 
   //fetch api data:
   const getQuizAPI = async () => {
@@ -23,31 +25,27 @@ export default function Home() {
     const questions = data.results
 
     // console.log(questions)
-
-    //function to return single random question, could be used to randomize answers in cards?:
-    // const randomQuestionFunction = (newQuestion) => {
-    //   var keys = Object.keys(newQuestion)
-    //   return newQuestion[keys[(keys.length * Math.random()) << 0]]
-    // }
-    // const randomQuestion = randomQuestionFunction(questions)
-    // console.log(randomQuestion)
-
+    setIsLoading(false)
     setQuestions(questions)
   }
 
-  //start game and generate 10 questions:
+  //start game on click and generate 10 questions:
   const startGame = () => {
     //get 10 questions:
     getQuizAPI()
+    //add loader while API data is fetched?:
+    setIsLoading(true)
+    //display question area and hide Start button
+    setStarted(true)
   }
 
-  //function to return single random question and answers (but can show duplicate questions):
-  // const newQuestion = () => {
-  //   var keys = Object.keys(questions)
-  //   const randomQuestion = questions[keys[(keys.length * Math.random()) << 0]]
-  //   setActiveQuestion(randomQuestion)
-  //   console.log(activeQuestion)
+  //function to return single random question, could be used to randomize answers in cards?:
+  // const randomQuestionFunction = (newQuestion) => {
+  //   var keys = Object.keys(newQuestion)
+  //   return newQuestion[keys[(keys.length * Math.random()) << 0]]
   // }
+  // const randomQuestion = randomQuestionFunction(questions)
+  // console.log(randomQuestion)
 
   const newQuestion = () => {
     if (progress === totalQuestions) {
@@ -62,6 +60,18 @@ export default function Home() {
       // console.log(newList)
       setProgress(progress + 1)
     }
+  }
+
+  //check if answer is correct or not:
+  //this works but is very buggy:
+  const givenAnswer = (e) => {
+    const btnTxt = e.target.innerHTML
+    if (btnTxt === activeQuestion.correct_answer) {
+      console.log('yeeee buddy!')
+    } else {
+      console.log('nahhh')
+    }
+    newQuestion()
   }
 
   const totalQuestions = 10
@@ -87,50 +97,58 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
-        <h2>
-          Progress Bar: {progress} / {totalQuestions}{' '}
-        </h2>
         {/* <ul>
           {question.map((q, index) => {
             // console.log(q)
             return (
               <li key={index}>
-                {q.question}
-                {q.correct_answer}
-                {q.incorrect_answers}
+              {q.question}
+              {q.correct_answer}
+              {q.incorrect_answers}
               </li>
-            )
-          })}
-        </ul> */}
-        <button onClick={startGame} className={styles.btn}>
-          Start Game
-        </button>
-        <button onClick={newQuestion} className={styles.btn}>
-          Next Question
-        </button>
-        <h2>Score</h2>
-        {/* <h2>{question.question}</h2> */}
-        <h2>{activeQuestion.question}</h2>
-        {/* <h2>{activeQuestion.correct_answer}</h2>
-        <h2>{activeQuestion.incorrect_answers}</h2> */}
-      </div>
-
-      <div className={styles.grid}>
-        <a href='#' className={styles.card} rel='noopener noreferrer'>
-          <p>{activeQuestion.correct_answer}</p>
-        </a>
-        {activeQuestion.incorrect_answers?.map((q, index) => {
-          return (
-            <a
-              key={index}
-              href='#'
-              className={styles.card}
-              rel='noopener noreferrer'
-            >
-              <p>{q}</p>
-            </a>
-          )
-        })}
+              )
+            })}
+          </ul> */}
+        {isLoading && <p>Loading...</p>}
+        {!started ? (
+          <button onClick={startGame} className={styles.btn}>
+            Start Game
+          </button>
+        ) : (
+          <div>
+            <h2>
+              Progress Bar: {progress} / {totalQuestions}
+            </h2>
+            <h2>Score</h2>
+            <button onClick={newQuestion} className={styles.btn}>
+              Next Question
+            </button>
+            <h2>{activeQuestion.question}</h2>
+            <div className={styles.grid}>
+              <a
+                href='#'
+                onClick={givenAnswer}
+                className={styles.card}
+                rel='noopener noreferrer'
+              >
+                <p>{activeQuestion.correct_answer}</p>
+              </a>
+              {activeQuestion.incorrect_answers?.map((q, index) => {
+                return (
+                  <a
+                    key={index}
+                    href='#'
+                    onClick={givenAnswer}
+                    className={styles.card}
+                    rel='noopener noreferrer'
+                  >
+                    <p>{q}</p>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </main>
   )
