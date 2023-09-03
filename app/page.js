@@ -11,7 +11,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const [questions, setQuestions] = useState([])
-  const [activeQuestion, setActiveQuestion] = useState([])
+  const [activeQuestion, setActiveQuestion] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [score, setScore] = useState(0)
@@ -24,19 +24,42 @@ export default function Home() {
       'https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple'
     )
     const data = await response.json()
-    const questions = data.results
+    const results = data.results
 
-    // console.log(questions)
+    const questions = results.map((q) => {
+      const question = q.question
+      // console.log(question)
+
+      // console.log(new_correct_answers)
+
+      //this is very long-winded and drawn-out:
+      //try to join all answers in one array
+      const correct = { answer: q.correct_answer, Active: 'true' }
+      const incorrect = q.incorrect_answers.map((i) => {
+        // return { incorrect_answers: i, Active: 'false' }
+        return i
+      })
+
+      const lastCorrect = incorrect.map((inc) => {
+        return { answer: inc, Active: 'false' }
+      })
+      // console.log(lastCorrect)
+      const answers = [...lastCorrect, correct]
+      return { question, answers }
+    })
+
     setIsLoading(false)
     setQuestions(questions)
+    console.log(questions)
   }
 
   //start game on click and generate 10 questions:
   const startGame = () => {
     setScore(0)
     setProgress(0)
+    setEndGame(false)
     //get 10 questions:
-    getQuizAPI().catch((e) => console.log(e.message, 'offline beyy'))
+    getQuizAPI().catch((e) => console.log(e.message, 'cannot fetch questions'))
     //add loader while API data is fetched?:
     setIsLoading(true)
     //display question area and hide Start button
@@ -63,10 +86,10 @@ export default function Home() {
     } else {
       const newQ = questions[0]
       setActiveQuestion(newQ)
-      // console.log(activeQuestion)
+      console.log(newQ)
+
       const newList = questions.slice(1)
       setQuestions(newList)
-      // console.log(newList)
       setProgress(progress + 1)
     }
   }
@@ -120,6 +143,14 @@ export default function Home() {
             })}
           </ul> */}
         {isLoading && <p>Loading...</p>}
+        {!endGame ? (
+          <div></div>
+        ) : (
+          <div>
+            <h3>Niiiiice</h3>
+            <h2>Score {score}</h2>
+          </div>
+        )}
         {!started ? (
           <button onClick={startGame} className={styles.btn}>
             {!endGame ? 'Start Game' : 'Restart'}
@@ -133,7 +164,7 @@ export default function Home() {
             <button onClick={newQuestion} className={styles.btn}>
               Next Question
             </button>
-            <h2>{activeQuestion.question}</h2>
+            <h2>{activeQuestion && activeQuestion.question}</h2>
             <div className={styles.grid}>
               <a
                 href='#'
@@ -141,21 +172,23 @@ export default function Home() {
                 className={styles.card}
                 rel='noopener noreferrer'
               >
-                <p>{activeQuestion.correct_answer}</p>
+                <p>{activeQuestion && activeQuestion.correct_answer}</p>
               </a>
-              {activeQuestion.incorrect_answers?.map((q, index) => {
-                return (
-                  <a
-                    key={index}
-                    href='#'
-                    onClick={givenAnswer}
-                    className={styles.card}
-                    rel='noopener noreferrer'
-                  >
-                    <p>{q}</p>
-                  </a>
-                )
-              })}
+              {activeQuestion &&
+                activeQuestion.answers.map((q, index) => {
+                  // console.log(q.incorrect_answers)
+                  return (
+                    <a
+                      key={index}
+                      href='#'
+                      onClick={givenAnswer}
+                      className={styles.card}
+                      rel='noopener noreferrer'
+                    >
+                      <p>{q.incorrect_answers}</p>
+                    </a>
+                  )
+                })}
             </div>
           </div>
         )}
