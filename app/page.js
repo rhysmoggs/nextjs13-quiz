@@ -28,20 +28,16 @@ export default function Home() {
 
     const questions = results.map((q) => {
       const question = q.question
-      // console.log(question)
 
-      // console.log(new_correct_answers)
-
-      //this is very long-winded and drawn-out:
-      //try to join all answers in one array
-      const correct = { answer: q.correct_answer, Active: 'true' }
+      //add
+      const correct = { answer: q.correct_answer, rightAnswer: true }
       const incorrect = q.incorrect_answers.map((i) => {
-        // return { incorrect_answers: i, Active: 'false' }
+        // return { incorrect_answers: i, rightAnswer: 'false' }
         return i
       })
 
       const lastCorrect = incorrect.map((inc) => {
-        return { answer: inc, Active: 'false' }
+        return { answer: inc, rightAnswer: false }
       })
       // console.log(lastCorrect)
       const answers = [...lastCorrect, correct]
@@ -96,9 +92,11 @@ export default function Home() {
 
   //check if answer is correct or not:
   //this works but is very buggy and can sometimes return wrong answer:
-  const givenAnswer = (e) => {
-    const btnTxt = e.target.innerHTML
-    if (btnTxt === activeQuestion.correct_answer) {
+  const givenAnswer = (rightAnswer) => {
+    // const btnTxt = e.target.innerHTML
+    // if (btnTxt === activeQuestion.answers.rightAnswer['true']) {
+    // if (Object.values(rightAnswer).includes('true')) {
+    if (rightAnswer) {
       console.log('yeeee buddy!')
       setScore(score + 1)
     } else {
@@ -166,14 +164,6 @@ export default function Home() {
             </button>
             <h2>{activeQuestion && activeQuestion.question}</h2>
             <div className={styles.grid}>
-              <a
-                href='#'
-                onClick={givenAnswer}
-                className={styles.card}
-                rel='noopener noreferrer'
-              >
-                <p>{activeQuestion && activeQuestion.correct_answer}</p>
-              </a>
               {activeQuestion &&
                 activeQuestion.answers.map((q, index) => {
                   // console.log(q.incorrect_answers)
@@ -181,11 +171,11 @@ export default function Home() {
                     <a
                       key={index}
                       href='#'
-                      onClick={givenAnswer}
+                      onClick={() => givenAnswer(q.rightAnswer)}
                       className={styles.card}
                       rel='noopener noreferrer'
                     >
-                      <p>{q.incorrect_answers}</p>
+                      <p>{q.answer}</p>
                     </a>
                   )
                 })}
