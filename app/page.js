@@ -41,12 +41,35 @@ export default function Home() {
       })
       // console.log(lastCorrect)
       const answers = [...lastCorrect, correct]
+
+      //randomize order of answers:
+      function shuffle(array) {
+        let currentIndex = array.length,
+          randomIndex
+
+        // While there remain elements to shuffle.
+        while (currentIndex > 0) {
+          // Pick a remaining element.
+          randomIndex = Math.floor(Math.random() * currentIndex)
+          currentIndex--
+
+          // And swap it with the current element.
+          ;[array[currentIndex], array[randomIndex]] = [
+            array[randomIndex],
+            array[currentIndex],
+          ]
+        }
+
+        return array
+      }
+      shuffle(answers)
+      console.log(answers)
+
       return { question, answers }
     })
 
     setIsLoading(false)
     setQuestions(questions)
-    console.log(questions)
   }
 
   //start game on click and generate 10 questions:
@@ -91,15 +114,13 @@ export default function Home() {
   }
 
   //check if answer is correct or not:
-  //this works but is very buggy and can sometimes return wrong answer:
   const givenAnswer = (rightAnswer) => {
-    // const btnTxt = e.target.innerHTML
-    // if (btnTxt === activeQuestion.answers.rightAnswer['true']) {
-    // if (Object.values(rightAnswer).includes('true')) {
     if (rightAnswer) {
       console.log('yeeee buddy!')
+      console.log(rightAnswer)
       setScore(score + 1)
     } else {
+      console.log(rightAnswer)
       console.log('nahhh')
     }
     newQuestion()
