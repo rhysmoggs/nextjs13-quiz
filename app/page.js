@@ -17,6 +17,7 @@ export default function Home() {
   const [score, setScore] = useState(0)
   const [started, setStarted] = useState(false)
   const [endGame, setEndGame] = useState(false)
+  const [isCorrect, setIsCorrect] = useState(false)
 
   //fetch api data:
   const getQuizAPI = async () => {
@@ -36,11 +37,11 @@ export default function Home() {
         return i
       })
 
-      const lastCorrect = incorrect.map((inc) => {
+      const lastIncorrect = incorrect.map((inc) => {
         return { answer: inc, rightAnswer: false }
       })
       // console.log(lastCorrect)
-      const answers = [...lastCorrect, correct]
+      const answers = [...lastIncorrect, correct]
 
       //randomize order of answers:
       function shuffle(array) {
@@ -63,7 +64,6 @@ export default function Home() {
         return array
       }
       shuffle(answers)
-      console.log(answers)
 
       return { question, answers }
     })
@@ -103,27 +103,38 @@ export default function Home() {
       //hide question quiz area:
       setStarted(false)
     } else {
+      //reset answer state:
+      setIsCorrect(false)
+      //take first question set:
       const newQ = questions[0]
       setActiveQuestion(newQ)
-      console.log(newQ)
-
+      //remove question from set of questions:
       const newList = questions.slice(1)
+      // update:
       setQuestions(newList)
       setProgress(progress + 1)
     }
   }
 
   //check if answer is correct or not:
-  const givenAnswer = (rightAnswer) => {
+  const givenAnswer = (rightAnswer, index) => {
     if (rightAnswer) {
-      console.log('yeeee buddy!')
-      console.log(rightAnswer)
+      // console.log('yeeee buddy!')
+      // console.log(rightAnswer)
+      // console.log(index)
+      //link state to index to indicate correct answer, then alter className in DOM:
+      setIsCorrect(index)
+      setTimeout(() => {
+        //wait 1000ms for user to notice style change, then produce next question:
+        newQuestion()
+      }, 1000)
+
       setScore(score + 1)
     } else {
       console.log(rightAnswer)
       console.log('nahhh')
+      newQuestion()
     }
-    newQuestion()
   }
 
   const totalQuestions = 10
@@ -149,18 +160,6 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
-        {/* <ul>
-          {question.map((q, index) => {
-            // console.log(q)
-            return (
-              <li key={index}>
-              {q.question}
-              {q.correct_answer}
-              {q.incorrect_answers}
-              </li>
-              )
-            })}
-          </ul> */}
         {isLoading && <p>Loading...</p>}
         {!endGame ? (
           <div></div>
@@ -187,13 +186,17 @@ export default function Home() {
             <div className={styles.grid}>
               {activeQuestion &&
                 activeQuestion.answers.map((q, index) => {
-                  // console.log(q.incorrect_answers)
                   return (
                     <a
+                      ///try something like this?:
+                      // id={id}
                       key={index}
                       href='#'
-                      onClick={() => givenAnswer(q.rightAnswer)}
-                      className={styles.card}
+                      onClick={() => givenAnswer(q.rightAnswer, index)}
+                      // className={styles.card}
+                      className={
+                        isCorrect === index ? styles.card2 : styles.card
+                      }
                       rel='noopener noreferrer'
                     >
                       <p>{q.answer}</p>
