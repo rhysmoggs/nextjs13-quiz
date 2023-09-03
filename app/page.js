@@ -16,6 +16,7 @@ export default function Home() {
   const [progress, setProgress] = useState(0)
   const [score, setScore] = useState(0)
   const [started, setStarted] = useState(false)
+  const [endGame, setEndGame] = useState(false)
 
   //fetch api data:
   const getQuizAPI = async () => {
@@ -32,8 +33,10 @@ export default function Home() {
 
   //start game on click and generate 10 questions:
   const startGame = () => {
+    setScore(0)
+    setProgress(0)
     //get 10 questions:
-    getQuizAPI()
+    getQuizAPI().catch((e) => console.log(e.message, 'offline beyy'))
     //add loader while API data is fetched?:
     setIsLoading(true)
     //display question area and hide Start button
@@ -51,7 +54,12 @@ export default function Home() {
   const newQuestion = () => {
     if (progress === totalQuestions) {
       console.log('end game')
-      //run end game function
+      //run end game function:
+
+      //switch Start Game button txt to Restart:
+      setEndGame(true)
+      //hide question quiz area:
+      setStarted(false)
     } else {
       const newQ = questions[0]
       setActiveQuestion(newQ)
@@ -114,7 +122,7 @@ export default function Home() {
         {isLoading && <p>Loading...</p>}
         {!started ? (
           <button onClick={startGame} className={styles.btn}>
-            Start Game
+            {!endGame ? 'Start Game' : 'Restart'}
           </button>
         ) : (
           <div>
