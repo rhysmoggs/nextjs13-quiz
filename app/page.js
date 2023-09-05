@@ -19,6 +19,8 @@ export default function Home() {
   const [endGame, setEndGame] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
 
+  //too much state? reduce or collate more into one state.
+
   //fetch api data:
   const getQuizAPI = async () => {
     const response = await fetch(
@@ -76,7 +78,9 @@ export default function Home() {
   const startGame = () => {
     setScore(0)
     setProgress(0)
+    setActiveQuestion(null)
     setEndGame(false)
+    setIsCorrect(false)
     //get 10 questions:
     getQuizAPI().catch((e) => console.log(e.message, 'cannot fetch questions'))
     //add loader while API data is fetched?:

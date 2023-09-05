@@ -59,20 +59,19 @@
   width: var(--max-width);
 }
 
-.card {
+.card,
+.card2 {
   padding: 1.2rem 1.6rem;
   border-radius: var(--border-radius);
   background: rgba(var(--card-rgb), 0);
   border: 1px solid rgba(var(--card-border-rgb), 0);
   transition: background 200ms, border 200ms;
+  margin: 0.5rem;
+  border: 1px solid black;
 }
 
 .card2 {
-  padding: 1.2rem 1.6rem;
-  border-radius: var(--border-radius);
-  background: green;
-  border: 1px solid rgba(var(--card-border-rgb), 0);
-  transition: background 200ms, border 200ms;
+  background: rgb(255, 210, 0);
 }
 
 .card span {
