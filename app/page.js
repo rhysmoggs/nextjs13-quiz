@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // 1. gather 10 Qs from API
 // 2. randomize order of 10 Qs = ? dont need to
@@ -12,67 +12,77 @@ import { useState } from 'react'
 export default function Home() {
   const [questions, setQuestions] = useState([])
   const [activeQuestion, setActiveQuestion] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [score, setScore] = useState(0)
-  const [started, setStarted] = useState(false)
+
   const [endGame, setEndGame] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
 
   //too much state? reduce or collate more into one state.
 
   //fetch api data:
-  const getQuizAPI = async () => {
-    const response = await fetch(
+  useEffect(() => {
+    setLoading(true)
+
+    fetch(
       'https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple'
     )
-    const data = await response.json()
-    const results = data.results
+      .then((response) => response.json())
+      .then((data) => setQsFromFetch(data.results))
+      .then(setLoading(false))
+    // const data = response.json()
+    const setQsFromFetch = (data) => {
+      const results = data
+      console.log(results)
 
-    const questions = results.map((q) => {
-      const question = q.question
+      const questions = results.map((q) => {
+        const question = q.question
 
-      //add
-      const correct = { answer: q.correct_answer, rightAnswer: true }
-      const incorrect = q.incorrect_answers.map((i) => {
-        // return { incorrect_answers: i, rightAnswer: 'false' }
-        return i
-      })
+        //add
+        const correct = { answer: q.correct_answer, rightAnswer: true }
+        const incorrect = q.incorrect_answers.map((i) => {
+          // return { incorrect_answers: i, rightAnswer: 'false' }
+          return i
+        })
 
-      const lastIncorrect = incorrect.map((inc) => {
-        return { answer: inc, rightAnswer: false }
-      })
-      // console.log(lastCorrect)
-      const answers = [...lastIncorrect, correct]
+        const lastIncorrect = incorrect.map((inc) => {
+          return { answer: inc, rightAnswer: false }
+        })
+        // console.log(lastCorrect)
+        const answers = [...lastIncorrect, correct]
 
-      //randomize order of answers:
-      function shuffle(array) {
-        let currentIndex = array.length,
-          randomIndex
+        //randomize order of answers:
+        function shuffle(array) {
+          let currentIndex = array.length,
+            randomIndex
 
-        // While there remain elements to shuffle.
-        while (currentIndex > 0) {
-          // Pick a remaining element.
-          randomIndex = Math.floor(Math.random() * currentIndex)
-          currentIndex--
+          // While there remain elements to shuffle.
+          while (currentIndex > 0) {
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex)
+            currentIndex--
 
-          // And swap it with the current element.
-          ;[array[currentIndex], array[randomIndex]] = [
-            array[randomIndex],
-            array[currentIndex],
-          ]
+            // And swap it with the current element.
+            ;[array[currentIndex], array[randomIndex]] = [
+              array[randomIndex],
+              array[currentIndex],
+            ]
+          }
+
+          return array
         }
+        shuffle(answers)
 
-        return array
-      }
-      shuffle(answers)
+        return { question, answers }
+      })
+      setQuestions(questions)
+      console.log(questions)
+    }
 
-      return { question, answers }
-    })
-
-    setIsLoading(false)
-    setQuestions(questions)
-  }
+    // setLoading(false)
+    startGame()
+  }, [])
 
   //start game on click and generate 10 questions:
   const startGame = () => {
@@ -81,12 +91,10 @@ export default function Home() {
     setActiveQuestion(null)
     setEndGame(false)
     setIsCorrect(false)
+    newQuestion()
     //get 10 questions:
-    getQuizAPI().catch((e) => console.log(e.message, 'cannot fetch questions'))
     //add loader while API data is fetched?:
-    setIsLoading(true)
     //display question area and hide Start button
-    setStarted(true)
   }
 
   //function to return single random question, could be used to randomize answers in cards?:
@@ -105,7 +113,6 @@ export default function Home() {
       //switch Start Game button txt to Restart:
       setEndGame(true)
       //hide question quiz area:
-      setStarted(false)
     } else {
       //reset answer state:
       setIsCorrect(false)
@@ -145,71 +152,24 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <div>
-          <h1 className={styles.heading}>
-            <a href='#' rel='noopener noreferrer'>
-              <Image
-                src='/logo.png'
-                alt='Globe Trotters Logo'
-                className={styles.globeLogo}
-                width={220}
-                height={220}
-                priority
-              />
-            </a>
-            <span className={styles.span}>Globe Trotter Quiz</span>
-          </h1>
-        </div>
-      </div>
+      <div className={styles.description}></div>
+
+      <button onClick={startGame} className={styles.btn}>
+        {!endGame ? 'Start Game' : 'Restart'}
+      </button>
 
       <div className={styles.center}>
-        {isLoading && <p>Loading...</p>}
-        {!endGame ? (
-          <div></div>
+        {loading ? (
+          <p>Loading...</p>
         ) : (
           <div>
-            <h3>Niiiiice</h3>
-            <h2>Score {score}</h2>
+            <h2>{questions.question}</h2>
           </div>
         )}
-        {!started ? (
-          <button onClick={startGame} className={styles.btn}>
-            {!endGame ? 'Start Game' : 'Restart'}
-          </button>
-        ) : (
-          <div>
-            <h2>
-              Progress Bar: {progress} / {totalQuestions}
-            </h2>
-            <h2>Score {score}</h2>
-            <button onClick={newQuestion} className={styles.btn}>
-              Next Question
-            </button>
-            <h2>{activeQuestion && activeQuestion.question}</h2>
-            <div className={styles.grid}>
-              {activeQuestion &&
-                activeQuestion.answers.map((q, index) => {
-                  return (
-                    <a
-                      ///try something like this?:
-                      // id={id}
-                      key={index}
-                      href='#'
-                      onClick={() => givenAnswer(q.rightAnswer, index)}
-                      // className={styles.card}
-                      className={
-                        isCorrect === index ? styles.card2 : styles.card
-                      }
-                      rel='noopener noreferrer'
-                    >
-                      <p>{q.answer}</p>
-                    </a>
-                  )
-                })}
-            </div>
-          </div>
-        )}
+
+        <div>
+          <h2>{activeQuestion && activeQuestion.question}</h2>
+        </div>
       </div>
     </main>
   )
