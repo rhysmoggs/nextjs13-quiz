@@ -70,7 +70,10 @@ export default function Home() {
     setLoading(false)
     setQuestions(questions)
     newQuestion(questions)
+    setScore(0)
     setStarted(true)
+    //can improve this by toggling? if started is true then end is false?
+    setEndGame(false)
     console.log(questions)
   }
 
@@ -87,7 +90,7 @@ export default function Home() {
       //reset score, progress and questions to 0/null:
       setQuestions([])
       setProgress(0)
-      setScore(0)
+      // setScore(0)
       console.log('end game')
       //run end game function:
 
@@ -117,6 +120,7 @@ export default function Home() {
       setTimeout(() => {
         newQuestion(questions)
       }, 1000)
+      setScore(score + 1)
     } else {
       console.log('nahhh')
       setTimeout(() => {
