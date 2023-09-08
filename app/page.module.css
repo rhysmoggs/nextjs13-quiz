@@ -60,7 +60,8 @@
 }
 
 .card,
-.card2 {
+.cardCorrect,
+.cardIncorrect {
   padding: 1.2rem 1.6rem;
   border-radius: var(--border-radius);
   background: rgba(var(--card-rgb), 0);
@@ -70,8 +71,12 @@
   border: 1px solid black;
 }
 
-.card2 {
+.cardCorrect:active {
   background: rgb(255, 210, 0);
+}
+
+.cardIncorrect:active {
+  background: red;
 }
 
 .card span {

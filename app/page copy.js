@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function Home() {
   const [questions, setQuestions] = useState([])
@@ -11,11 +11,9 @@ export default function Home() {
   const [score, setScore] = useState(0)
   const [started, setStarted] = useState(false)
   const [endGame, setEndGame] = useState(false)
+  const [isCorrect, setIsCorrect] = useState(false)
 
   //too much state? reduce or collate more into one state.
-
-  const cardCorrect = styles.cardCorrect
-  const cardIncorrect = styles.cardIncorrect
 
   //fetch api data:
   const getQuizAPI = async () => {
@@ -71,7 +69,6 @@ export default function Home() {
     setQuestions(questions)
     newQuestion(questions)
     setStarted(true)
-    console.log(questions)
   }
 
   //function to return single random question, could be used to randomize answers in cards?:
@@ -97,7 +94,7 @@ export default function Home() {
       setStarted(false)
     } else {
       //reset answer state:
-
+      setIsCorrect(false)
       //take first question set:
       const newQ = questions[0]
       setActiveQuestion(newQ)
@@ -109,17 +106,27 @@ export default function Home() {
     }
   }
 
-  //check if selected answer is correct or not:
-  const givenAnswer = (rightAnswer) => {
-    console.log(rightAnswer)
+  //check if answer is correct or not:
+  const givenAnswer = (rightAnswer, index) => {
+    console.log(rightAnswer, index)
     if (rightAnswer) {
       console.log('yeeee buddy!')
+      console.log(rightAnswer)
+      // console.log(index)
+      //link state to index to indicate correct answer, then alter className in DOM:
+      setIsCorrect(true)
       setTimeout(() => {
+        //wait 1000ms for user to notice style change, then produce next question:
         newQuestion(questions)
       }, 1000)
+
+      setScore(score + 1)
     } else {
+      setIsCorrect(false)
+      console.log(rightAnswer)
       console.log('nahhh')
       setTimeout(() => {
+        //wait 1000ms for user to notice style change, then produce next question:
         newQuestion(questions)
       }, 1000)
     }
@@ -174,9 +181,11 @@ export default function Home() {
                       // id={id}
                       key={index}
                       href='#'
-                      onClick={() => givenAnswer(q.rightAnswer)}
+                      onClick={() => givenAnswer(q.rightAnswer, index)}
                       className={
-                        q.rightAnswer === true ? cardCorrect : cardIncorrect
+                        isCorrect === index
+                          ? styles.cardCorrect
+                          : styles.cardIncorrect
                       }
                       rel='noopener noreferrer'
                     >
