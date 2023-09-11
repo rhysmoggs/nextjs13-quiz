@@ -105,35 +105,16 @@ export default function Home() {
     }
   }
 
-  //check if selected answer is correct or not:
-  // const givenAnswer = (answer, index) => {
-  //   setSelected(true)
-  //   console.log('selected answer and index are: ', answer, index)
-
-  //   console.log('answer is: ', activeQuestion['answers'][index]['rightAnswer'])
-  //   setTimeout(() => {
-  //     if (answer === activeQuestion['answers'][index]['rightAnswer']) {
-  //       console.log('yeeee buddy!')
-  //       setScore(score + 1)
-  //       setClassCard(styles.cardCorrect)
-  //     } else {
-  //       console.log('nahhh')
-  //       setClassCard(styles.cardIncorrect)
-  //     }
-  //     newQuestion(questions)
-  //   }, 1000)
-  // }
-
   // check if selected answer is correct or not:
   const givenAnswer = (answer, index) => {
     console.log('answer options are: ', activeQuestion['answers'])
     const defoCorrect = activeQuestion['answers'].find(
       (item) => item.rightAnswer === true
     )
-    // console.log('defCorrect is: ', defoCorrect)
-    // console.log('actual correct answer is: ', defoCorrect.rightAnswer)
+    console.log('defCorrect is: ', defoCorrect)
+    console.log('actual correct answer is: ', defoCorrect.rightAnswer)
 
-    // console.log('user selected answer was: ', answer)
+    console.log('user selected answer was: ', answer)
 
     if (answer === defoCorrect.rightAnswer) {
       console.log('yeeee buddy!')
@@ -162,14 +143,8 @@ export default function Home() {
   //   newQuestion(questions)
   // }
 
-  //update classCard className when user selects:
-  //possible "selected" not necessary?
-  //revisit
-  // useEffect(() => {
-  //   classCard
-  // }, [selected])
-
   const totalQuestions = 10
+  const classDefault = styles.card
 
   return (
     <main className={styles.main}>
@@ -224,9 +199,9 @@ export default function Home() {
                       // }
                       onClick={() => givenAnswer(q.rightAnswer, index)}
                       className={
-                        !selected || q.rightAnswer === false
-                          ? styles.card
-                          : classCard
+                        q.rightAnswer === true && selected
+                          ? classCard
+                          : classDefault
                       }
                       rel='noopener noreferrer'
                     >
