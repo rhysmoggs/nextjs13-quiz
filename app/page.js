@@ -11,11 +11,10 @@ export default function Home() {
   const [score, setScore] = useState(0)
   const [started, setStarted] = useState(false)
   const [endGame, setEndGame] = useState(false)
+  const [classCard, setClassCard] = useState(null)
+  const [selected, setSelected] = useState(false)
 
   //too much state? reduce or collate more into one state.
-
-  const cardCorrect = styles.cardCorrect
-  const cardIncorrect = styles.cardIncorrect
 
   //fetch api data:
   const getQuizAPI = async () => {
@@ -77,15 +76,9 @@ export default function Home() {
     console.log(questions)
   }
 
-  //function to return single random question, could be used to randomize answers in cards?:
-  // const randomQuestionFunction = (newQuestion) => {
-  //   var keys = Object.keys(newQuestion)
-  //   return newQuestion[keys[(keys.length * Math.random()) << 0]]
-  // }
-  // const randomQuestion = randomQuestionFunction(questions)
-  // console.log(randomQuestion)
-
+  // generate new question:
   const newQuestion = (questions) => {
+    setSelected(false)
     if (progress === totalQuestions) {
       //reset score, progress and questions to 0/null:
       setQuestions([])
@@ -113,21 +106,68 @@ export default function Home() {
   }
 
   //check if selected answer is correct or not:
-  const givenAnswer = (rightAnswer) => {
-    console.log(rightAnswer)
-    if (rightAnswer) {
+  // const givenAnswer = (answer, index) => {
+  //   setSelected(true)
+  //   console.log('selected answer and index are: ', answer, index)
+
+  //   console.log('answer is: ', activeQuestion['answers'][index]['rightAnswer'])
+  //   setTimeout(() => {
+  //     if (answer === activeQuestion['answers'][index]['rightAnswer']) {
+  //       console.log('yeeee buddy!')
+  //       setScore(score + 1)
+  //       setClassCard(styles.cardCorrect)
+  //     } else {
+  //       console.log('nahhh')
+  //       setClassCard(styles.cardIncorrect)
+  //     }
+  //     newQuestion(questions)
+  //   }, 1000)
+  // }
+
+  // check if selected answer is correct or not:
+  const givenAnswer = (answer, index) => {
+    console.log('answer options are: ', activeQuestion['answers'])
+    const defoCorrect = activeQuestion['answers'].find(
+      (item) => item.rightAnswer === true
+    )
+    // console.log('defCorrect is: ', defoCorrect)
+    // console.log('actual correct answer is: ', defoCorrect.rightAnswer)
+
+    // console.log('user selected answer was: ', answer)
+
+    if (answer === defoCorrect.rightAnswer) {
       console.log('yeeee buddy!')
-      setTimeout(() => {
-        newQuestion(questions)
-      }, 1000)
+
       setScore(score + 1)
+      setClassCard(styles.cardCorrect)
     } else {
       console.log('nahhh')
-      setTimeout(() => {
-        newQuestion(questions)
-      }, 1000)
+
+      setClassCard(styles.cardIncorrect)
     }
+    setSelected(true)
+    setTimeout(() => {
+      newQuestion(questions)
+    }, 1000)
   }
+
+  // const givenAnswer = (answer, index) => {
+  //   console.log('answer is: ', activeQuestion['answers'])
+  //   const defoCorrect = activeQuestion['answers'].find(
+  //     (item) => item.rightAnswer === true
+  //   )
+  //   console.log('actual correct answer is: ', defoCorrect.rightAnswer)
+
+  //   console.log('user selected answer was: ', answer)
+  //   newQuestion(questions)
+  // }
+
+  //update classCard className when user selects:
+  //possible "selected" not necessary?
+  //revisit
+  // useEffect(() => {
+  //   classCard
+  // }, [selected])
 
   const totalQuestions = 10
 
@@ -178,9 +218,15 @@ export default function Home() {
                       // id={id}
                       key={index}
                       href='#'
-                      onClick={() => givenAnswer(q.rightAnswer)}
+                      // onClick={() => givenAnswer(q.rightAnswer)}
+                      // className={
+                      //   q.rightAnswer === true ? cardCorrect : cardIncorrect
+                      // }
+                      onClick={() => givenAnswer(q.rightAnswer, index)}
                       className={
-                        q.rightAnswer === true ? cardCorrect : cardIncorrect
+                        !selected || q.rightAnswer === false
+                          ? styles.card
+                          : classCard
                       }
                       rel='noopener noreferrer'
                     >
