@@ -1,8 +1,7 @@
 'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
-import { useState } from 'react'
-import Card from './components/Card'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
   const [questions, setQuestions] = useState([])
@@ -12,7 +11,9 @@ export default function Home() {
   const [score, setScore] = useState(0)
   const [started, setStarted] = useState(false)
   const [endGame, setEndGame] = useState(false)
-  //set state for answer
+  const [cardCorrect, setCardCorrect] = useState(false)
+  const [cardIncorrect, setCardIncorrect] = useState(false)
+  const [selected, setSelected] = useState(false)
 
   //too much state? reduce or collate more into one state.
 
@@ -78,6 +79,7 @@ export default function Home() {
 
   // generate new question:
   const newQuestion = (questions) => {
+    setSelected(false)
     if (progress === totalQuestions) {
       //reset score, progress and questions to 0/null:
       setQuestions([])
@@ -105,7 +107,7 @@ export default function Home() {
   }
 
   // check if selected answer is correct or not:
-  const givenAnswer = (answer) => {
+  const givenAnswer = (answer, index) => {
     console.log('answer options are: ', activeQuestion['answers'])
     const defoCorrect = activeQuestion['answers'].find(
       (item) => item.rightAnswer === true
@@ -119,12 +121,16 @@ export default function Home() {
       console.log('yeeee buddy!')
 
       setScore(score + 1)
+      setCardCorrect(styles.cardCorrect)
     } else {
       console.log('nahhh')
+
+      setCardIncorrect(styles.cardIncorrect)
     }
+    setSelected(true)
     setTimeout(() => {
       newQuestion(questions)
-    }, 3000)
+    }, 1000)
   }
 
   // const givenAnswer = (answer, index) => {
@@ -180,14 +186,31 @@ export default function Home() {
             <h2>{activeQuestion && activeQuestion.question}</h2>
             <div className={styles.grid}>
               {activeQuestion &&
-                activeQuestion.answers.map((answers, index) => (
-                  <Card
-                    answers={answers}
-                    key={index}
-                    givenAnswer={givenAnswer}
-                    progress={progress}
-                  />
-                ))}
+                activeQuestion.answers.map((q, index) => {
+                  return (
+                    <a
+                      ///try something like this?:
+                      // id={id}
+                      key={index}
+                      href='#'
+                      // onClick={() => givenAnswer(q.rightAnswer)}
+                      // className={
+                      //   q.rightAnswer === true ? cardCorrect : cardIncorrect
+                      // }
+                      onClick={() => givenAnswer(q.rightAnswer, index)}
+                      className={`card ${
+                        q.rightAnswer ? cardCorrect : cardIncorrect
+                      }`}
+                      // className={
+                      //   q.rightAnswer && selected ? classCard : classDefault
+                      // }
+
+                      rel='noopener noreferrer'
+                    >
+                      <p>{q.answer}</p>
+                    </a>
+                  )
+                })}
             </div>
           </div>
         ) : (
