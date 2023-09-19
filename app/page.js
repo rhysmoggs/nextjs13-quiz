@@ -106,16 +106,18 @@ export default function Home() {
 
   // check if selected answer is correct or not:
   const givenAnswer = (answer) => {
-    console.log('answer options are: ', activeQuestion['answers'])
+    console.log('answer passed is: ', answer)
+    console.log('answer passed is: ', answer.rightAnswer)
+    // console.log('answer options are: ', activeQuestion['answers'])
     const defoCorrect = activeQuestion['answers'].find(
       (item) => item.rightAnswer === true
     )
-    console.log('defCorrect is: ', defoCorrect)
+    console.log('defoCorrect is: ', defoCorrect)
     console.log('actual correct answer is: ', defoCorrect.rightAnswer)
 
     console.log('user selected answer was: ', answer)
 
-    if (answer === defoCorrect.rightAnswer) {
+    if (answer.rightAnswer === defoCorrect.rightAnswer) {
       console.log('yeeee buddy!')
 
       setScore(score + 1)
@@ -126,17 +128,6 @@ export default function Home() {
       newQuestion(questions)
     }, 3000)
   }
-
-  // const givenAnswer = (answer, index) => {
-  //   console.log('answer is: ', activeQuestion['answers'])
-  //   const defoCorrect = activeQuestion['answers'].find(
-  //     (item) => item.rightAnswer === true
-  //   )
-  //   console.log('actual correct answer is: ', defoCorrect.rightAnswer)
-
-  //   console.log('user selected answer was: ', answer)
-  //   newQuestion(questions)
-  // }
 
   const totalQuestions = 10
 

@@ -4,9 +4,9 @@ import styles from 'app/page.module.css'
 const Card = ({ answers, index, givenAnswer, progress }) => {
   const [selected, setSelected] = useState(false)
 
-  console.log(answers)
-  console.log(index)
-  console.log('mapped answer: ', answers.rightAnswer)
+  // console.log(answers)
+  // console.log(index)
+  // console.log('mapped answer: ', answers.rightAnswer)
 
   const handleClick = () => {
     setSelected(true)
