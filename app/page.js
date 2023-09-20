@@ -13,6 +13,7 @@ export default function Home() {
   const [started, setStarted] = useState(false)
   const [endGame, setEndGame] = useState(false)
   //set state for answer
+  const [disabledClass, setDisabledClass] = useState(false)
 
   //too much state? reduce or collate more into one state.
 
@@ -106,6 +107,7 @@ export default function Home() {
 
   // check if selected answer is correct or not:
   const givenAnswer = (answer) => {
+    setDisabledClass(true)
     console.log('answer passed is: ', answer)
     console.log('answer passed is: ', answer.rightAnswer)
     // console.log('answer options are: ', activeQuestion['answers'])
@@ -126,6 +128,7 @@ export default function Home() {
     }
     setTimeout(() => {
       newQuestion(questions)
+      setDisabledClass(false)
     }, 3000)
   }
 
@@ -171,9 +174,10 @@ export default function Home() {
             <h2>{activeQuestion && activeQuestion.question}</h2>
             <div className={styles.grid}>
               {activeQuestion &&
-                activeQuestion.answers.map((answers, index) => (
+                activeQuestion.answers.map((answer, index) => (
                   <Card
-                    answers={answers}
+                    disabled={disabledClass}
+                    answer={answer}
                     key={index}
                     givenAnswer={givenAnswer}
                     progress={progress}

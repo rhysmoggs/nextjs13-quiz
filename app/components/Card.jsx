@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styles from 'app/page.module.css'
 
-const Card = ({ answers, index, givenAnswer, progress }) => {
+const Card = ({ disabled, answer, index, givenAnswer, progress }) => {
   const [selected, setSelected] = useState(false)
+
+  console.log('disabledClass is set to: ', disabled)
 
   // console.log(answers)
   // console.log(index)
@@ -10,7 +12,7 @@ const Card = ({ answers, index, givenAnswer, progress }) => {
 
   const handleClick = () => {
     setSelected(true)
-    givenAnswer(answers, index)
+    givenAnswer(answer, index)
   }
 
   useEffect(() => {
@@ -27,12 +29,12 @@ const Card = ({ answers, index, givenAnswer, progress }) => {
       //   q.rightAnswer === true ? cardCorrect : cardIncorrect
       // }
       onClick={handleClick}
-      className={`${styles.card} ${
-        answers.rightAnswer && selected && styles.cardCorrect
-      } : ${!answers.rightAnswer && selected && styles.cardIncorrect}`}
+      className={`${styles.card} ${disabled && styles.disabled} ${
+        answer.rightAnswer && selected && styles.cardCorrect
+      } : ${!answer.rightAnswer && selected && styles.cardIncorrect}`}
       rel='noopener noreferrer'
     >
-      <p>{answers.answer}</p>
+      <p>{answer.answer}</p>
     </a>
   )
 }
