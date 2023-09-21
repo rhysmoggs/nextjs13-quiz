@@ -108,16 +108,16 @@ export default function Home() {
   // check if selected answer is correct or not:
   const givenAnswer = (answer) => {
     setDisabledClass(true)
-    console.log('answer passed is: ', answer)
-    console.log('answer passed is: ', answer.rightAnswer)
+    // console.log('answer passed is: ', answer)
+    // console.log('answer passed is: ', answer.rightAnswer)
     // console.log('answer options are: ', activeQuestion['answers'])
     const defoCorrect = activeQuestion['answers'].find(
       (item) => item.rightAnswer === true
     )
-    console.log('defoCorrect is: ', defoCorrect)
-    console.log('actual correct answer is: ', defoCorrect.rightAnswer)
+    // console.log('defoCorrect is: ', defoCorrect)
+    // console.log('actual correct answer is: ', defoCorrect.rightAnswer)
 
-    console.log('user selected answer was: ', answer)
+    // console.log('user selected answer was: ', answer)
 
     if (answer.rightAnswer === defoCorrect.rightAnswer) {
       console.log('yeeee buddy!')

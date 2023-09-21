@@ -4,12 +4,6 @@ import styles from 'app/page.module.css'
 const Card = ({ disabled, answer, index, givenAnswer, progress }) => {
   const [selected, setSelected] = useState(false)
 
-  console.log('disabledClass is set to: ', disabled)
-
-  // console.log(answers)
-  // console.log(index)
-  // console.log('mapped answer: ', answers.rightAnswer)
-
   const handleClick = () => {
     setSelected(true)
     givenAnswer(answer, index)
@@ -25,9 +19,7 @@ const Card = ({ disabled, answer, index, givenAnswer, progress }) => {
       // disable={selected}
       href='#'
       // onClick={() => givenAnswer(q.rightAnswer)}
-      // className={
-      //   q.rightAnswer === true ? cardCorrect : cardIncorrect
-      // }
+
       onClick={handleClick}
       className={`${styles.card} ${disabled && styles.disabled} ${
         answer.rightAnswer && selected && styles.cardCorrect

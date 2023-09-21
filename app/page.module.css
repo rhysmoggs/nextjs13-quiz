@@ -75,15 +75,6 @@
   cursor: pointer;
 }
 
-/* .card:hover,
-.cardCorrect:hover,
-.cardIncorrect:hover {
-  cursor: pointer;
-  box-shadow: 3px 7px 16px 5px rgb(187 148 133 / 60%);
-  transition: transform 150ms;
-  transform: scale(1.03);
-} */
-
 .cardCorrect {
   background: rgb(255, 210, 0);
 }
