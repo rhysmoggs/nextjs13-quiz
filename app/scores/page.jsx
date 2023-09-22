@@ -1,5 +1,5 @@
 import React from 'react'
-// import styles from '../page.module.css'
+import styles from '../page.module.css'
 
 //test quiz api
 async function getScores() {
@@ -13,6 +13,7 @@ async function getScores() {
 
   const newData = data.items
 
+  //clean this up and double check logs:
   const singleScore = newData.map((singleScore) => {
     console.log('internal clg', singleScore)
     console.log('internal clg', singleScore.score)
@@ -23,28 +24,29 @@ async function getScores() {
   return singleScore
 }
 
-async function Score() {
+async function HighScores() {
   const scores = await getScores()
   return (
     <div>
       <h1>High Scores</h1>
       <div>
-        <p>
-          {scores?.map((score) => {
-            return <SingleScore key={score.id} score={score} />
-          })}
-        </p>
+        {scores?.map((score) => {
+          return <Score key={score.id} score={score} />
+        })}
       </div>
     </div>
   )
 }
 
-function SingleScore(score) {
+function Score({ score }) {
   return (
-    <div>
-      <p>{score}</p>
+    //temp styling:
+    <div className={styles.card}>
+      <p>{score.id}</p>
+      <p>Username: {score.username}</p>
+      <p>Score: {score.score}</p>
     </div>
   )
 }
 
-export default Score
+export default HighScores
