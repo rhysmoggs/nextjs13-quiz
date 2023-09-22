@@ -1,7 +1,8 @@
 'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import Card from './components/Card'
 
 export default function Home() {
   const [questions, setQuestions] = useState([])
@@ -11,9 +12,8 @@ export default function Home() {
   const [score, setScore] = useState(0)
   const [started, setStarted] = useState(false)
   const [endGame, setEndGame] = useState(false)
-  const [cardCorrect, setCardCorrect] = useState(false)
-  const [cardIncorrect, setCardIncorrect] = useState(false)
-  const [selected, setSelected] = useState(false)
+  //set state for answer
+  const [disabledClass, setDisabledClass] = useState(false)
 
   //too much state? reduce or collate more into one state.
 
@@ -79,7 +79,6 @@ export default function Home() {
 
   // generate new question:
   const newQuestion = (questions) => {
-    setSelected(false)
     if (progress === totalQuestions) {
       //reset score, progress and questions to 0/null:
       setQuestions([])
@@ -107,42 +106,31 @@ export default function Home() {
   }
 
   // check if selected answer is correct or not:
-  const givenAnswer = (answer, index) => {
-    console.log('answer options are: ', activeQuestion['answers'])
+  const givenAnswer = (answer) => {
+    setDisabledClass(true)
+    // console.log('answer passed is: ', answer)
+    // console.log('answer passed is: ', answer.rightAnswer)
+    // console.log('answer options are: ', activeQuestion['answers'])
     const defoCorrect = activeQuestion['answers'].find(
       (item) => item.rightAnswer === true
     )
-    console.log('defCorrect is: ', defoCorrect)
-    console.log('actual correct answer is: ', defoCorrect.rightAnswer)
+    // console.log('defoCorrect is: ', defoCorrect)
+    // console.log('actual correct answer is: ', defoCorrect.rightAnswer)
 
-    console.log('user selected answer was: ', answer)
+    // console.log('user selected answer was: ', answer)
 
-    if (answer === defoCorrect.rightAnswer) {
+    if (answer.rightAnswer === defoCorrect.rightAnswer) {
       console.log('yeeee buddy!')
 
       setScore(score + 1)
-      setCardCorrect(styles.cardCorrect)
     } else {
       console.log('nahhh')
-
-      setCardIncorrect(styles.cardIncorrect)
     }
-    setSelected(true)
     setTimeout(() => {
       newQuestion(questions)
-    }, 1000)
+      setDisabledClass(false)
+    }, 3000)
   }
-
-  // const givenAnswer = (answer, index) => {
-  //   console.log('answer is: ', activeQuestion['answers'])
-  //   const defoCorrect = activeQuestion['answers'].find(
-  //     (item) => item.rightAnswer === true
-  //   )
-  //   console.log('actual correct answer is: ', defoCorrect.rightAnswer)
-
-  //   console.log('user selected answer was: ', answer)
-  //   newQuestion(questions)
-  // }
 
   const totalQuestions = 10
 
@@ -186,31 +174,15 @@ export default function Home() {
             <h2>{activeQuestion && activeQuestion.question}</h2>
             <div className={styles.grid}>
               {activeQuestion &&
-                activeQuestion.answers.map((q, index) => {
-                  return (
-                    <a
-                      ///try something like this?:
-                      // id={id}
-                      key={index}
-                      href='#'
-                      // onClick={() => givenAnswer(q.rightAnswer)}
-                      // className={
-                      //   q.rightAnswer === true ? cardCorrect : cardIncorrect
-                      // }
-                      onClick={() => givenAnswer(q.rightAnswer, index)}
-                      className={`card ${
-                        q.rightAnswer ? cardCorrect : cardIncorrect
-                      }`}
-                      // className={
-                      //   q.rightAnswer && selected ? classCard : classDefault
-                      // }
-
-                      rel='noopener noreferrer'
-                    >
-                      <p>{q.answer}</p>
-                    </a>
-                  )
-                })}
+                activeQuestion.answers.map((answer, index) => (
+                  <Card
+                    disabled={disabledClass}
+                    answer={answer}
+                    key={index}
+                    givenAnswer={givenAnswer}
+                    progress={progress}
+                  />
+                ))}
             </div>
           </div>
         ) : (
