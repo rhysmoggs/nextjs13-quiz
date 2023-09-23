@@ -6,26 +6,26 @@ async function getScores() {
   const res = await fetch(process.env.POCKETBASE_URL)
   const data = await res.json()
   // console.log(data)
-  //array of all records in quiz collection:
-  // console.log(data.items)
   //array of first record in quiz collection:
   // console.log(data.items[0])
 
-  const newData = data.items
+  //array of all records in quiz collection:
+  const allData = data.items
+  // console.log('allData: ', allData)
 
-  //clean this up and double check logs:
-  const singleScore = newData.map((singleScore) => {
-    console.log('internal clg', singleScore)
-    console.log('internal clg', singleScore.score)
-    console.log('internal clg', singleScore.username)
-    return singleScore
-  })
-
-  return singleScore
+  return allData
 }
 
 async function HighScores() {
-  const scores = await getScores()
+  const allScores = await getScores()
+  // console.log('allScores: ', allScores)
+  //return each score:
+  const scores = allScores.map((scores) => {
+    console.log('internal clg scores', scores)
+    console.log('internal clg scores.score', scores.score)
+    console.log('internal clg scores.username', scores.username)
+    return scores
+  })
   return (
     <div>
       <h1>High Scores</h1>
