@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from './page.module.css'
 import { useState } from 'react'
 import Card from './components/Card'
+import Link from 'next/link'
 
 export default function Home() {
   const [questions, setQuestions] = useState([])
@@ -132,7 +133,7 @@ export default function Home() {
     }, 3000)
   }
 
-  const totalQuestions = 10
+  const totalQuestions = 2
 
   return (
     <main className={styles.main}>
@@ -159,6 +160,9 @@ export default function Home() {
           <div>
             <h3>Congratulations!</h3>
             <h2>Score {score}</h2>
+            <Link href='/scores' className={styles.btnLink}>
+              High Scores
+            </Link>
             {/* //add name form to save to highscore board: */}
             {/* //save button for name input: */}
           </div>
