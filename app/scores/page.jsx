@@ -20,7 +20,7 @@ async function HighScores() {
   const allScores = await getScores()
   // console.log('allScores: ', allScores)
   //return each score:
-  const scores = allScores.map((scores) => {
+  const scores = allScores?.map((scores) => {
     console.log('internal clg scores', scores)
     console.log('internal clg scores.score', scores.score)
     console.log('internal clg scores.username', scores.username)
