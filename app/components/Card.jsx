@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from 'app/page.module.css'
+import styles from '../page.module.css'
 
 const Card = ({ disabled, answer, index, givenAnswer, progress }) => {
   const [selected, setSelected] = useState(false)
@@ -16,10 +16,7 @@ const Card = ({ disabled, answer, index, givenAnswer, progress }) => {
   return (
     <a
       key={index}
-      // disable={selected}
       href='#'
-      // onClick={() => givenAnswer(q.rightAnswer)}
-
       onClick={handleClick}
       className={`${styles.card} ${disabled && styles.disabled} ${
         answer.rightAnswer && selected && styles.cardCorrect
