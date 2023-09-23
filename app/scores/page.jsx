@@ -31,20 +31,21 @@ async function HighScores() {
       <h1>High Scores</h1>
       <div>
         {scores?.map((score) => {
-          return <Score key={score.id} score={score} />
+          return <Score key={score.id} singleScore={score} />
         })}
       </div>
     </div>
   )
 }
 
-function Score({ score }) {
+function Score({ singleScore }) {
+  const { id, username, score } = singleScore || {}
   return (
     //temp styling:
     <div className={styles.card}>
-      <p>{score.id}</p>
-      <p>Username: {score.username}</p>
-      <p>Score: {score.score}</p>
+      <p>{id}</p>
+      <p>Username: {username}</p>
+      <p>Score: {score}</p>
     </div>
   )
 }
