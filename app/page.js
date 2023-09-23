@@ -130,7 +130,7 @@ export default function Home() {
     setTimeout(() => {
       newQuestion(questions)
       setDisabledClass(false)
-    }, 3000)
+    }, 1000)
   }
 
   const totalQuestions = 2
