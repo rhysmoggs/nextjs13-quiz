@@ -190,9 +190,20 @@ export default function Home() {
             </div>
           </div>
         ) : (
-          <button onClick={getQuizAPI} className={styles.btn}>
-            {!endGame ? 'Start Game' : 'Restart'}
-          </button>
+          <div className={styles.menuContainer}>
+            <button onClick={getQuizAPI} className={styles.btn}>
+              {!endGame ? 'Start Game' : 'Restart'}
+            </button>
+            <Link href='/' className={styles.btn}>
+              How to Play
+            </Link>
+            <Link href='/' className={styles.btn}>
+              Contact
+            </Link>
+            <Link href='/scores' className={styles.btn}>
+              High Scores
+            </Link>
+          </div>
         )}
       </div>
     </main>

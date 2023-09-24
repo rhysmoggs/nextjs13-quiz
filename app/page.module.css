@@ -42,6 +42,11 @@
   position: relative;
 }
 
+.menuContainer {
+  border: 1px solid black;
+  padding: 2rem;
+}
+
 .span {
   text-align: center;
   font-size: 1.9rem;
@@ -64,7 +69,7 @@
   padding: 1.2rem 1.6rem;
   border-radius: var(--border-radius);
   background: rgba(var(--card-rgb), 0);
-  border: 1px solid rgba(var(--card-border-rgb), 0);
+  /* border: 1px solid rgba(var(--card-border-rgb), 0); */
   transition: background 200ms, border 200ms;
   margin: 0.5rem;
   border: 1px solid black;
@@ -111,7 +116,7 @@
 .btn,
 .btnLink {
   margin: 2rem;
-  padding: 1rem 2.3rem;
+  padding: 3.3rem;
 }
 
 .btnLink {
