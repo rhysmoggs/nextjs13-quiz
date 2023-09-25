@@ -4,36 +4,36 @@ import Score from './components/Score'
 import Link from 'next/link'
 
 //test quiz api
-// async function getScores() {
-//   const res = await fetch(process.env.POCKETBASE_URL)
-//   const data = await res.json()
+async function getScores() {
+  const res = await fetch(process.env.POCKETBASE_URL, { cache: 'force-cache' })
+  const data = await res.json()
 
-//   //array of all records in quiz collection:
-//   const allData = data.items
+  //array of all records in quiz collection:
+  const allData = await data.items
 
-//   return allData
-// }
+  return allData
+}
 
 async function HighScores() {
-  // const allScores = await getScores()
+  const allScores = await getScores()
   // //return each score:
-  // const scores = allScores?.map((scores) => {
-  //   console.log('internal clg scores', scores)
-  //   console.log('internal clg scores.score', scores.score)
-  //   console.log('internal clg scores.username', scores.username)
-  //   return scores
-  // })
+  const scores = await allScores?.map((scores) => {
+    // console.log('internal clg scores', scores)
+    // console.log('internal clg scores.score', scores.score)
+    // console.log('internal clg scores.username', scores.username)
+    return scores
+  })
   return (
     <div>
       <h1>High Scores</h1>
-      {/* <div>
+      <div>
         {scores?.map((score) => {
           return <Score key={score.id} singleScore={score} />
         })}
       </div>
       <Link href='/' className={styles.btnLink}>
         Home
-      </Link> */}
+      </Link>
     </div>
   )
 }
