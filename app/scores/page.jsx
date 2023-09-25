@@ -14,7 +14,7 @@ async function getScores() {
   return allData
 }
 
-async function HighScores() {
+async function getServerSideProps() {
   const allScores = await getScores()
   // //return each score:
   const scores = await allScores?.map((scores) => {
@@ -38,4 +38,4 @@ async function HighScores() {
   )
 }
 
-export default HighScores
+export default getServerSideProps
