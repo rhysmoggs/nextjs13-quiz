@@ -194,7 +194,7 @@ export default function Home() {
             <button onClick={getQuizAPI} className={styles.btn}>
               {!endGame ? 'Start Game' : 'Restart'}
             </button>
-            <Link href='/' className={styles.btn}>
+            {/* <Link href='/' className={styles.btn}>
               How to Play
             </Link>
             <Link href='/' className={styles.btn}>
@@ -202,7 +202,7 @@ export default function Home() {
             </Link>
             <Link href='/scores' className={styles.btn}>
               High Scores
-            </Link>
+            </Link> */}
           </div>
         )}
       </div>
