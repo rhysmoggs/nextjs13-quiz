@@ -5,10 +5,7 @@ import Link from 'next/link'
 
 //test quiz api
 async function getScores() {
-  const res = await fetch(
-    'http://127.0.0.1:8090/api/collections/quiz/records?page=1&perPage=30',
-    { cache: 'no-store' }
-  )
+  const res = await fetch(process.env.POCKETBASE_URL, { cache: 'no-store' })
   return res.json()
 
   //array of all records in quiz collection:
