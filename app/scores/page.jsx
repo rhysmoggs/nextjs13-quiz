@@ -6,18 +6,18 @@ import Link from 'next/link'
 //test quiz api
 async function getScores() {
   const res = await fetch(process.env.POCKETBASE_URL, { cache: 'no-store' })
-  return res.json()
+  const data = await res.json()
 
   //array of all records in quiz collection:
-  // const allData = await data.items
+  const allData = await data.items
 
-  // return allData
+  return allData
 }
 
 export default async function HighScores() {
   const data = await getScores()
   // //return each score:
-  const scores = await data.items?.map((scores) => {
+  const scores = await data?.map((scores) => {
     // console.log('internal clg scores', scores)
     // console.log('internal clg scores.score', scores.score)
     // console.log('internal clg scores.username', scores.username)
