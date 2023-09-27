@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 //test quiz api
 async function getScores() {
-  const res = await fetch(process.env.POCKETBASE_URL, { cache: 'force-cache' })
+  const res = await fetch(process.env.POCKETBASE_URL, { cache: 'no-store' })
   const data = await res.json()
 
   //array of all records in quiz collection:
@@ -14,7 +14,7 @@ async function getScores() {
   return allData
 }
 
-async function getServerSideProps() {
+export default async function HighScores() {
   const allScores = await getScores()
   // //return each score:
   const scores = await allScores?.map((scores) => {
@@ -37,5 +37,3 @@ async function getServerSideProps() {
     </div>
   )
 }
-
-export default getServerSideProps
