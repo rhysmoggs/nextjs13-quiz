@@ -194,15 +194,19 @@ export default function Home() {
             <button onClick={getQuizAPI} className={styles.btn}>
               {!endGame ? 'Start Game' : 'Restart'}
             </button>
-            <Link href='/' className={styles.btn}>
-              How to Play
-            </Link>
-            <Link href='/' className={styles.btn}>
-              Contact
-            </Link>
-            <Link href='/scores' className={styles.btn}>
-              High Scores
-            </Link>
+            {!endGame && (
+              <>
+                <Link href='/' className={styles.btn}>
+                  How to Play
+                </Link>
+                <Link href='/' className={styles.btn}>
+                  Contact
+                </Link>
+                <Link href='/scores' className={styles.btn}>
+                  High Scores
+                </Link>
+              </>
+            )}
           </div>
         )}
       </div>
