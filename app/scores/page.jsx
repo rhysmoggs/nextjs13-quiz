@@ -6,9 +6,13 @@ import Link from 'next/link'
 //test quiz api
 async function getScores() {
   // const res = await fetch(process.env.POCKETBASE_URL, { cache: 'no-store' })
+  // const res = await fetch(
+  //   process.env.POCKETBASE_URL +
+  //     '/api/collections/quiz/records?page=1&perPage=30',
+  //   { cache: 'no-store', method: 'GET' }
+  // )
   const res = await fetch(
-    process.env.POCKETBASE_URL +
-      '/api/collections/quiz/records?page=1&perPage=30',
+    process.env.POCKETBASE_URL + '/api/collections/quiz/records',
     { cache: 'no-store', method: 'GET' }
   )
   const data = await res.json()
