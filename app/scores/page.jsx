@@ -12,7 +12,8 @@ async function getScores() {
   //   { cache: 'no-store', method: 'GET' }
   // )
   const res = await fetch(
-    process.env.POCKETBASE_URL + '/api/collections/quiz/records',
+    process.env.POCKETBASE_URL +
+      '/api/collections/quiz/records?page=1&perPage=30',
     { cache: 'no-store', method: 'GET' }
   )
   const data = await res.json()
