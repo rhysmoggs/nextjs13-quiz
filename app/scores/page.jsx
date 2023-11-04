@@ -1,27 +1,28 @@
 import React from 'react'
+import pb from 'lib/pocketbase.js'
 import styles from '../page.module.css'
 import Score from './components/Score'
 import Link from 'next/link'
 
 //test quiz api
+// async function getScores() {
+//   const res = await fetch(
+//     process.env.POCKETBASE_URL +
+//       '/api/collections/quiz/records?page=1&perPage=30',
+//     { cache: 'no-store' }
+//   )
+//   const data = await res.json()
+
+//   const allData = await data.items
+
+//   return allData
+// }
 async function getScores() {
-  // const res = await fetch(process.env.POCKETBASE_URL, { cache: 'no-store' })
-  // const res = await fetch(
-  //   process.env.POCKETBASE_URL +
-  //     '/api/collections/quiz/records?page=1&perPage=30',
-  //   { cache: 'no-store', method: 'GET' }
-  // )
-  const res = await fetch(
-    process.env.POCKETBASE_URL +
-      '/api/collections/quiz/records?page=1&perPage=30',
-    { cache: 'no-store' }
-  )
-  const data = await res.json()
+  const records = await pb.collection('quiz').getFullList({
+    sort: '-created',
+  })
 
-  //array of all records in quiz collection:
-  const allData = await data.items
-
-  return allData
+  return records
 }
 
 export default async function HighScores() {
