@@ -40,7 +40,8 @@ export default async function HighScores() {
       <h1>High Scores</h1>
       <div>
         {scores?.map((score) => {
-          return <Score key={score.id} singleScore={score} />
+          // return <Score key={score.id} singleScore={score} />
+          return <Score key={score.id} singleScore={score || null} />
         })}
       </div>
       <Link href='/' className={styles.btnLink}>
