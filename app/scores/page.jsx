@@ -20,6 +20,7 @@ import Link from 'next/link'
 async function getScores() {
   const records = await pb.collection('quiz').getFullList({
     sort: '-created',
+    requestKey: null,
   })
 
   return records
