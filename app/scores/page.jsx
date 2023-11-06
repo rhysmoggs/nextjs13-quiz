@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import pb from 'lib/pocketbase.js'
 import styles from '../page.module.css'
