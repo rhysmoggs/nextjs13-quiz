@@ -1,7 +1,7 @@
 import React from 'react'
 import pb from 'lib/pocketbase.js'
 import styles from '../page.module.css'
-import Score from './components/Score'
+import Score from '../components/Score'
 import Link from 'next/link'
 
 //test quiz api
