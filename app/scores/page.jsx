@@ -57,14 +57,13 @@ export default async function HighScores() {
   const scores = await data.map((scores) => {
     return scores
   })
+  console.log(scores)
+  console.log('hi')
   return (
     <div>
       <h1>High Scores</h1>
       <div>
-        {scores?.map((score) => {
-          // return <Score key={score.id} singleScore={score} />
-          return <p>singleScore={score || null} </p>
-        })}
+        <p>{JSON.stringify(scores)}</p>
       </div>
       <Link href='/' className={styles.btnLink}>
         Home
