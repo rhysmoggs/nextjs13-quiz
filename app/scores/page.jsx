@@ -1,7 +1,7 @@
 import React from 'react'
-import pb from 'lib/pocketbase.js'
+import getScores from 'lib/pocketbase.js'
 import styles from '../page.module.css'
-import Score from '../components/Score'
+// import Score from '../components/Score'
 import Link from 'next/link'
 
 //test quiz api
@@ -18,14 +18,14 @@ import Link from 'next/link'
 //   return allData
 // }
 
-async function getScores() {
-  const records = await pb.collection('quiz').getFullList({
-    sort: '-created',
-    requestKey: null,
-  })
+// async function getScores() {
+//   const records = await pb.collection('quiz').getFullList({
+//     sort: '-created',
+//     requestKey: null,
+//   })
 
-  return records
-}
+//   return records
+// }
 
 // export default async function HighScores() {
 //   const data = await getScores()
@@ -57,8 +57,8 @@ export default async function HighScores() {
   const scores = await data.map((scores) => {
     return scores
   })
-  console.log(scores)
-  console.log('hi')
+  // console.log(scores)
+  // console.log('hi')
   return (
     <div>
       <h1>High Scores</h1>
