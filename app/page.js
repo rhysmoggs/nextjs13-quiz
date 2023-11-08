@@ -4,7 +4,7 @@ import styles from './page.module.css'
 import { useState } from 'react'
 import Card from './components/Card'
 import Link from 'next/link'
-import getScores from 'lib/pocketbase.js'
+import pb from 'lib/pocketbase.js'
 
 export default function Home() {
   const [questions, setQuestions] = useState([])
@@ -17,8 +17,19 @@ export default function Home() {
   const [endGame, setEndGame] = useState(false)
   //set state for answer
   const [disabledClass, setDisabledClass] = useState(false)
+  const [isToggled, setIsToggled] = useState(false)
 
   //too much state? reduce or collate more into one state.
+
+  //trialing fetching all data from pocketbase:
+  async function getScores() {
+    const records = await pb.collection('quiz').getFullList({
+      sort: '-created',
+      requestKey: null,
+    })
+
+    return records
+  }
 
   const HighScores = async () => {
     const data = await getScores()
@@ -28,9 +39,20 @@ export default function Home() {
     //   console.log(scores)
     // })
     setHighScore(data)
+    setIsToggled(!isToggled)
   }
 
-  HighScores()
+  // example create data
+  const data = {
+    username: 'test',
+    score: 123,
+  }
+
+  //trialing creating new record to pocketbase db:
+  async function newHighScore() {
+    const record = pb.collection('quiz').create(data)
+    return record
+  }
 
   //fetch api data:
   const getQuizAPI = async () => {
@@ -179,8 +201,28 @@ export default function Home() {
       </div> */}
       <div>
         <button onClick={HighScores} className={styles.btn}>
-          {!endGame ? 'Show Score' : 'Hide Score'}
-          <p>{JSON.stringify(highScore)}</p>
+          Show HighScore
+          {/* {isToggled ? <p>{JSON.stringify(highScore)}</p> : ''} */}
+          {isToggled ? (
+            <>
+              {highScore?.map((score) => {
+                return (
+                  <>
+                    <p>id: {score.id}</p>
+                    <p>Username: {score.username}</p>
+                    <p>Score: {score.score}</p>
+                  </>
+                )
+              })}
+            </>
+          ) : (
+            ''
+          )}
+        </button>
+      </div>
+      <div>
+        <button onClick={newHighScore} className={styles.btn}>
+          Add new High Score
         </button>
       </div>
 
