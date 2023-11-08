@@ -4,6 +4,7 @@ import styles from './page.module.css'
 import { useState } from 'react'
 import Card from './components/Card'
 import Link from 'next/link'
+import getScores from 'lib/pocketbase.js'
 
 export default function Home() {
   const [questions, setQuestions] = useState([])
@@ -11,12 +12,25 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [score, setScore] = useState(0)
+  const [highScore, setHighScore] = useState(null)
   const [started, setStarted] = useState(false)
   const [endGame, setEndGame] = useState(false)
   //set state for answer
   const [disabledClass, setDisabledClass] = useState(false)
 
   //too much state? reduce or collate more into one state.
+
+  const HighScores = async () => {
+    const data = await getScores()
+    console.log(data)
+    // //return each score:
+    // const scores = await data.map((scores) => {
+    //   console.log(scores)
+    // })
+    setHighScore(data)
+  }
+
+  HighScores()
 
   //fetch api data:
   const getQuizAPI = async () => {
@@ -69,6 +83,7 @@ export default function Home() {
     })
 
     setLoading(false)
+
     setQuestions(questions)
     newQuestion(questions)
     setScore(0)
@@ -153,6 +168,20 @@ export default function Home() {
             <span className={styles.span}>Globe Trotter Quiz</span>
           </h1>
         </div>
+      </div>
+
+      {/* <div>
+        <button onClick={HighScores} className={styles.btn}>
+          {!endGame ? 'Show Score' : 'Hide Score'}
+        </button>
+        <h1>High Scores</h1>
+        <p>{JSON.stringify(scores)}</p>
+      </div> */}
+      <div>
+        <button onClick={HighScores} className={styles.btn}>
+          {!endGame ? 'Show Score' : 'Hide Score'}
+          <p>{JSON.stringify(highScore)}</p>
+        </button>
       </div>
 
       <div className={styles.center}>
