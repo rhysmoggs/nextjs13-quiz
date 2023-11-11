@@ -21,6 +21,8 @@ export default function Home() {
 
   //too much state? reduce or collate more into one state.
 
+  //clean up functions and seperate into componenets or pages once tested:
+
   //trialing fetching all data from pocketbase:
   async function getScores() {
     const records = await pb.collection('quiz').getFullList({
