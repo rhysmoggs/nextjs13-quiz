@@ -18,6 +18,8 @@ export default function Home() {
   //set state for answer
   const [disabledClass, setDisabledClass] = useState(false)
   const [isToggled, setIsToggled] = useState(false)
+  // trial this:
+  const [getData, setGetData] = useState(null)
 
   //too much state? reduce or collate more into one state.
 
@@ -35,7 +37,7 @@ export default function Home() {
 
   const HighScores = async () => {
     const data = await getScores()
-    console.log(data)
+    // console.log(data)
     // //return each score:
     // const scores = await data.map((scores) => {
     //   console.log(scores)
@@ -54,6 +56,41 @@ export default function Home() {
   async function newHighScore() {
     const record = pb.collection('quiz').create(data)
     return record
+  }
+
+  //check API response:
+  async function createTestScore() {
+    const req = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+    console.log('test result:' + req)
+    return fetch(
+      'https://globe-trotter-quiz.pockethost.io/api/collections/quiz/records'
+      // 'http://127.0.0.1:8090/api/collections/quiz/records'
+    )
+      .then((res) => res.json())
+      .then((data) =>
+        // data.items.map((item) => console.log('items array: ', item))
+        // data.items.map((item) => item.score)
+        // data.items.map((item) => {
+        //   return <p>{item.score}</p>
+        // })
+        // console.log(data)
+        // console.log(data.items)
+        mapGetData(data.items)
+      )
+      .catch((err) => console.log(err, 'stuff went wrong'))
+  }
+
+  function mapGetData(items) {
+    const listedGetData = items.map((item) => {
+      return item.score
+    })
+    console.log(listedGetData)
+    setGetData(listedGetData)
   }
 
   //fetch api data:
@@ -114,7 +151,7 @@ export default function Home() {
     setStarted(true)
     //can improve this by toggling? if started is true then end is false?
     setEndGame(false)
-    console.log(questions)
+    // console.log(questions)
   }
 
   // generate new question:
@@ -124,7 +161,7 @@ export default function Home() {
       setQuestions([])
       setProgress(0)
       // setScore(0)
-      console.log('end game')
+      // console.log('end game')
       //run end game function:
 
       //switch Start Game button txt to Restart:
@@ -160,11 +197,12 @@ export default function Home() {
     // console.log('user selected answer was: ', answer)
 
     if (answer.rightAnswer === defoCorrect.rightAnswer) {
-      console.log('yeeee buddy!')
+      // console.log('yeeee buddy!')
 
       setScore(score + 1)
     } else {
-      console.log('nahhh')
+      // console.log('nahhh')
+      //write logic for wrong answer or visual UX?
     }
     setTimeout(() => {
       newQuestion(questions)
@@ -225,6 +263,18 @@ export default function Home() {
       <div>
         <button onClick={newHighScore} className={styles.btn}>
           Add new High Score
+        </button>
+      </div>
+      <div>
+        <button onClick={createTestScore} className={styles.btn}>
+          Show GET req Score:
+          {getData?.map((score) => {
+            return (
+              <>
+                <p>{score}</p>
+              </>
+            )
+          })}
         </button>
       </div>
 
