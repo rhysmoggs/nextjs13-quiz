@@ -58,9 +58,6 @@ export default function Home() {
     return record
   }
 
-  const dev = process.env.POCKETBASE_URL
-  console.log(dev)
-
   //check API response:
   async function getTestScore() {
     const req = {
@@ -73,7 +70,7 @@ export default function Home() {
 
     return fetch(
       // 'https://globe-trotter-quiz.pockethost.io/api/collections/quiz/records'
-      process.env.POCKETBASE_URL + '/api/collections/quiz/records'
+      `${process.env.POCKETBASE_URL}/api/collections/quiz/records`
       // 'http://127.0.0.1:8090/api/collections/quiz/records'
     )
       .then((res) => res.json())
