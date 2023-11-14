@@ -4,11 +4,11 @@ const page = () => {
   //function to fetch scores:
   const getScores = async () => {
     const res = await fetch(
-      `${process.env.POCKETBASE_URL}/api/collections/quiz/records?page=1&perPage=30`,
-      { cache: 'no-store' }
-      // process.env.POCKETBASE_URL +
-      //   '/api/collections/quiz/records?page=1&perPage=30',
+      // `${process.env.POCKETBASE_URL}/api/collections/quiz/records?page=1&perPage=30`,
       // { cache: 'no-store' }
+      process.env.POCKETBASE_URL +
+        '/api/collections/quiz/records?page=1&perPage=30',
+      { cache: 'no-store' }
     )
     const data = await res.json()
 
