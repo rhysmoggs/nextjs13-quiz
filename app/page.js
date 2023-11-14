@@ -59,7 +59,7 @@ export default function Home() {
   }
 
   //check API response:
-  async function createTestScore() {
+  async function getTestScore() {
     const req = {
       method: 'GET',
       headers: {
@@ -266,7 +266,7 @@ export default function Home() {
         </button>
       </div>
       <div>
-        <button onClick={createTestScore} className={styles.btn}>
+        <button onClick={getTestScore} className={styles.btn}>
           Show GET req Score:
           {getData?.map((score) => {
             return (
