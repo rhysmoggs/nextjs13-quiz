@@ -1,6 +1,10 @@
-import React from 'react'
+//client side render, no use of hooks/state
+'use client'
+import React, { useState } from 'react'
+import styles from '../page.module.css'
 
 const page = () => {
+  const [scoreData, getScoreData] = useState(null)
   //function to fetch scores:
   const getScores = async () => {
     const res = await fetch(
@@ -23,20 +27,29 @@ const page = () => {
     console.log('data: ', data)
 
     const allData = await data.items
-    // console.log(allData)
-    return allData
+    console.log('allData clg: ', allData)
+    getScoreData(allData)
   }
 
-  getScores()
+  console.log('SCORE DATA: ', scoreData)
 
-  // const displayScores = async () => {
-  //   const res = await getScores()
-  //   console.log(res)
-  // }
-  // displayScores()
+  //what is the purpose of this function?:
+  const displayScores = async () => {
+    const res = await getScores()
+    //currently showing as undefined:
+    console.log(res)
+  }
 
   //instead of returning this, just export current code as components and create new Page, then import and <Score /> it.
-  return <div>Hello</div>
+  return (
+    <div>
+      <button onClick={displayScores} className={styles.btn}>
+        Add new High Score
+      </button>
+      {/* test just to display data: */}
+      <p>{JSON.stringify(scoreData)}</p>
+    </div>
+  )
 }
 
 export default page
