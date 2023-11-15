@@ -101,6 +101,7 @@ export default function Home() {
     const response = await fetch(
       'https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple'
     )
+    console.log('questions response clg: ', response)
     const data = await response.json()
     const results = data.results
 
