@@ -1,7 +1,7 @@
 //client side render, no use of hooks/state
 'use client'
 import React, { useEffect, useState } from 'react'
-import Score from '../components/ScoreCard'
+import Score from '../components/ScoreContainer'
 
 const page = () => {
   const [scoreData, setScoreData] = useState(null)
