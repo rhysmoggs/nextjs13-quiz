@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Score from '../components/Score'
-import getDataFromAPI from '../components/API'
+import getDataFromAPI from '../api/API'
 
 const page = async () => {
   const scoreData = await getDataFromAPI()

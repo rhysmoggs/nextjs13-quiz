@@ -1,5 +1,7 @@
 //server side
 
+require('dotenv').config()
+
 const getDataFromAPI = async () => {
   //function to fetch scores:
   const res = await fetch(
@@ -19,11 +21,7 @@ const getDataFromAPI = async () => {
   )
   // console.log('res: ', res)
   const data = await res.json()
-
-  // const allData = await data.items
-  // console.log('allData clg: ', allData)
-
-  //Serialization: need to stringify data to be able to use server side data on client-side??
+  // Serialization: need to stringify data to be able to use server side data on client-side??
   // JSON.stringify(data)
 
   console.log('data: ', data)
