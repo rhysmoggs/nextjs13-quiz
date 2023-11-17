@@ -70,7 +70,7 @@ export default function Home() {
 
     return fetch(
       // 'https://globe-trotter-quiz.pockethost.io/api/collections/quiz/records'
-      `${process.env.POCKETBASE_URL}/api/collections/quiz/records`
+      `${process.env.NEXT_PUBLIC_POCKETBASE_URL}/api/collections/quiz/records`
       // 'http://127.0.0.1:8090/api/collections/quiz/records'
     )
       .then((res) => res.json())

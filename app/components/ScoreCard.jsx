@@ -14,7 +14,7 @@ import styles from '../page.module.css'
 //   )
 // }
 
-function Score() {
+const ScoreCard = () => {
   return (
     <div className={styles.card}>
       <p>Username:</p>
@@ -22,4 +22,4 @@ function Score() {
   )
 }
 
-export default Score
+export default ScoreCard
