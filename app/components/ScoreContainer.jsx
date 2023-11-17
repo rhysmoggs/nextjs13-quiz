@@ -1,10 +1,8 @@
-'use client'
-
 import React from 'react'
-import Score from '../components/Score'
 import getDataFromAPI from '../api/API'
+import Score from './Score'
 
-const page = async () => {
+const ScoreContainer = async () => {
   const scoreData = await getDataFromAPI()
   console.log('scoreData: ', scoreData)
   return (
@@ -30,4 +28,4 @@ const page = async () => {
   )
 }
 
-export default page
+export default ScoreContainer
