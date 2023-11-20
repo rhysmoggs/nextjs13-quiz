@@ -4,7 +4,7 @@ import Score from './Score'
 
 const ScoreContainer = async () => {
   const scoreData = await getDataFromAPI()
-  console.log('scoreData: ', scoreData)
+  // console.log('scoreData: ', scoreData)
   return (
     <div>
       {/* <h1>List of High Scores:</h1> */}
@@ -21,7 +21,7 @@ const ScoreContainer = async () => {
         // console.log('USER DATA: ', score)
         // console.log('score: ', score.score)
         // return { userData }
-        console.log('Score spread : ', { ...score })
+        // console.log('Score spread : ', { ...score })
         return <Score key={score.id} {...score} />
       })}
     </div>

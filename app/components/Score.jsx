@@ -2,7 +2,7 @@ import React from 'react'
 import styles from '../page.module.css'
 
 const Score = ({ ...score }) => {
-  console.log('Score component score = ', score)
+  // console.log('Score component score = ', score)
   return (
     <div className={styles.card}>
       <p>Username: {score.username}</p>

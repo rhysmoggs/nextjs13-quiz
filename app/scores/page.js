@@ -4,7 +4,7 @@ import Link from 'next/link'
 import styles from '../page.module.css'
 
 function page() {
-  console.log('hello')
+  // console.log('hello')
   return (
     <div>
       <h1>High Score: </h1>
