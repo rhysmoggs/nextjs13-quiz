@@ -30,6 +30,7 @@ export default function Home() {
 
   //trialing fetching all data from pocketbase:
   async function getScores() {
+    console.log('getScores: ', pb)
     const records = await pb.collection('quiz').getFullList({
       sort: '-created',
       requestKey: null,
@@ -39,6 +40,7 @@ export default function Home() {
   }
 
   const HighScores = async () => {
+    console.log('HighScores: ', pb)
     const data = await getScores()
     // console.log(data)
     // //return each score:
