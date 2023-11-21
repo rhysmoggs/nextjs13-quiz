@@ -4,6 +4,10 @@
 // dns.setDefaultResultOrder('ipv4first')
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  env: {
+    POCKETBASE_URL: 'https://globe-trotter-quiz.pockethost.io',
+  },
+}
 
 module.exports = nextConfig
