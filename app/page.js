@@ -5,6 +5,9 @@ import { useState } from 'react'
 import Card from './components/Card'
 import Link from 'next/link'
 import pb from 'lib/pocketbase.js'
+import getEnvironment from './getEnvironment.config'
+
+require('dotenv').config()
 
 export default function Home() {
   const [questions, setQuestions] = useState([])
@@ -69,9 +72,7 @@ export default function Home() {
     console.log('test result:' + req)
 
     return fetch(
-      // 'https://globe-trotter-quiz.pockethost.io/api/collections/quiz/records'
-      `${process.env.NEXT_PUBLIC_POCKETBASE_URL}/api/collections/quiz/records`
-      // 'http://127.0.0.1:8090/api/collections/quiz/records'
+      `${getEnvironment.currentEnvironment}/api/collections/quiz/records`
     )
       .then((res) => res.json())
       .then((data) =>
