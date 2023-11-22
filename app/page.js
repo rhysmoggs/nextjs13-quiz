@@ -72,7 +72,7 @@ export default function Home() {
     console.log('test result:' + req)
 
     return fetch(
-      `${getEnvironment.currentEnvironment}/api/collections/quiz/records`
+      `${getEnvironment.curretEnvironment}/api/collections/quiz/records`
     )
       .then((res) => res.json())
       .then((data) =>
@@ -85,7 +85,7 @@ export default function Home() {
         // console.log(data.items)
         mapGetData(data.items)
       )
-      .catch((err) => console.log(err, 'stuff went wrong'))
+      .catch((err) => console.log('Ttuff went wrong: ', err))
   }
 
   function mapGetData(items) {
