@@ -30,23 +30,31 @@ export default function Home() {
 
   //trialing fetching all data from pocketbase:
   async function getScores() {
-    const records = await pb.collection('quiz').getFullList({
-      sort: '-created',
-      requestKey: null,
-    })
+    try {
+      const records = await pb.collection('quiz').getFullList({
+        sort: '-created',
+        requestKey: null,
+      })
 
-    return records
+      return records
+    } catch (error) {
+      console.error('getScores error: ', error)
+    }
   }
 
   const HighScores = async () => {
-    const data = await getScores()
-    // console.log(data)
-    // //return each score:
-    // const scores = await data.map((scores) => {
-    //   console.log(scores)
-    // })
-    setHighScore(data)
-    setIsToggled(!isToggled)
+    try {
+      const data = await getScores()
+      // console.log(data)
+      // //return each score:
+      // const scores = await data.map((scores) => {
+      //   console.log(scores)
+      // })
+      setHighScore(data)
+      setIsToggled(!isToggled)
+    } catch (error) {
+      console.error('HighScores error: ', error)
+    }
   }
 
   // example create data
@@ -57,35 +65,33 @@ export default function Home() {
 
   //trialing creating new record to pocketbase db:
   async function newHighScore() {
-    const record = pb.collection('quiz').create(data)
-    return record
+    try {
+      const record = pb.collection('quiz').create(data)
+      return record
+    } catch (error) {
+      console.error('newHighScore error: ', error)
+    }
   }
 
   //check API response:
-  async function getTestScore() {
-    const req = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-    console.log('test result:' + req)
-
-    return fetch(
-      `${getEnvironment.curretEnvironment}/api/collections/quiz/records`
-    )
-      .then((res) => res.json())
-      .then((data) =>
-        // data.items.map((item) => console.log('items array: ', item))
-        // data.items.map((item) => item.score)
-        // data.items.map((item) => {
-        //   return <p>{item.score}</p>
-        // })
-        // console.log(data)
-        // console.log(data.items)
-        mapGetData(data.items)
+  const getTestScore = async () => {
+    try {
+      const res = await fetch(
+        `${getEnvironment.currentEnvironment}/api/collections/quiz/records`,
+        {
+          method: 'GET',
+          cache: 'no-store',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       )
-      .catch((err) => console.log('Ttuff went wrong: ', err))
+      console.log('test result:' + res)
+      const data = await res.json()
+      mapGetData(data.items)
+    } catch (error) {
+      console.error('Error: ', error)
+    }
   }
 
   function mapGetData(items) {
@@ -98,64 +104,68 @@ export default function Home() {
 
   //fetch api data:
   const getQuizAPI = async () => {
-    setLoading(true)
-    const response = await fetch(
-      'https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple'
-    )
-    console.log('questions response clg: ', response)
-    const data = await response.json()
-    const results = data.results
+    try {
+      setLoading(true)
+      const response = await fetch(
+        'https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple'
+      )
+      console.log('questions response clg: ', response)
+      const data = await response.json()
+      const results = data.results
 
-    const questions = results.map((q) => {
-      const question = q.question
+      const questions = results.map((q) => {
+        const question = q.question
 
-      //add
-      const correct = { answer: q.correct_answer, rightAnswer: true }
-      const incorrect = q.incorrect_answers.map((i) => {
-        // return { incorrect_answers: i, rightAnswer: 'false' }
-        return i
-      })
+        //add
+        const correct = { answer: q.correct_answer, rightAnswer: true }
+        const incorrect = q.incorrect_answers.map((i) => {
+          // return { incorrect_answers: i, rightAnswer: 'false' }
+          return i
+        })
 
-      const lastIncorrect = incorrect.map((inc) => {
-        return { answer: inc, rightAnswer: false }
-      })
-      // console.log(lastCorrect)
-      const answers = [...lastIncorrect, correct]
+        const lastIncorrect = incorrect.map((inc) => {
+          return { answer: inc, rightAnswer: false }
+        })
+        // console.log(lastCorrect)
+        const answers = [...lastIncorrect, correct]
 
-      //randomize order of answers:
-      function shuffle(array) {
-        let currentIndex = array.length,
-          randomIndex
+        //randomize order of answers:
+        function shuffle(array) {
+          let currentIndex = array.length,
+            randomIndex
 
-        // While there remain elements to shuffle.
-        while (currentIndex > 0) {
-          // Pick a remaining element.
-          randomIndex = Math.floor(Math.random() * currentIndex)
-          currentIndex--
+          // While there remain elements to shuffle.
+          while (currentIndex > 0) {
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex)
+            currentIndex--
 
-          // And swap it with the current element.
-          ;[array[currentIndex], array[randomIndex]] = [
-            array[randomIndex],
-            array[currentIndex],
-          ]
+            // And swap it with the current element.
+            ;[array[currentIndex], array[randomIndex]] = [
+              array[randomIndex],
+              array[currentIndex],
+            ]
+          }
+
+          return array
         }
+        shuffle(answers)
 
-        return array
-      }
-      shuffle(answers)
+        return { question, answers }
+      })
 
-      return { question, answers }
-    })
+      setLoading(false)
 
-    setLoading(false)
-
-    setQuestions(questions)
-    newQuestion(questions)
-    setScore(0)
-    setStarted(true)
-    //can improve this by toggling? if started is true then end is false?
-    setEndGame(false)
-    // console.log(questions)
+      setQuestions(questions)
+      newQuestion(questions)
+      setScore(0)
+      setStarted(true)
+      //can improve this by toggling? if started is true then end is false?
+      setEndGame(false)
+      // console.log(questions)
+    } catch (error) {
+      console.error('Error: ', error)
+    }
   }
 
   // generate new question:
