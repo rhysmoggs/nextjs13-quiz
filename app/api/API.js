@@ -8,17 +8,17 @@ const getDataFromAPI = async () => {
     const res = await fetch(
       `${getEnvironment.currentEnvironment}/api/collections/quiz/records?page=1&perPage=30`,
       {
-        cache: 'no-store',
+        method: 'GET',
         headers: {
-          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
+        cache: 'no-store',
       }
     )
     const data = await res.json()
     return data
   } catch (error) {
-    console.log('Error: ', error)
+    console.error('Error: ', error)
   }
 }
 

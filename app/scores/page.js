@@ -7,7 +7,7 @@ function page() {
   // console.log('hello')
   return (
     <div>
-      <h1>High Score: </h1>
+      <h1>High Scores: </h1>
       <ScoreContainer />
       <Link href='/' className={styles.btnLink}>
         Home

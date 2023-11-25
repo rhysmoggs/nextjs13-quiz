@@ -5,7 +5,6 @@ import { useState } from 'react'
 import Card from './components/Card'
 import Link from 'next/link'
 import pb from 'lib/pocketbase.js'
-import getEnvironment from './getEnvironment.config'
 
 require('dotenv').config()
 
@@ -15,49 +14,16 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [score, setScore] = useState(0)
-  const [highScore, setHighScore] = useState(null)
   const [started, setStarted] = useState(false)
   const [endGame, setEndGame] = useState(false)
   //set state for answer
   const [disabledClass, setDisabledClass] = useState(false)
-  const [isToggled, setIsToggled] = useState(false)
-  // trial this:
-  const [getData, setGetData] = useState(null)
 
   //too much state? reduce or collate more into one state.
 
   //clean up functions and seperate into componenets or pages once tested:
 
-  //trialing fetching all data from pocketbase:
-  async function getScores() {
-    try {
-      const records = await pb.collection('quiz').getFullList({
-        sort: '-created',
-        requestKey: null,
-      })
-
-      return records
-    } catch (error) {
-      console.error('getScores error: ', error)
-    }
-  }
-
-  const HighScores = async () => {
-    try {
-      const data = await getScores()
-      // console.log(data)
-      // //return each score:
-      // const scores = await data.map((scores) => {
-      //   console.log(scores)
-      // })
-      setHighScore(data)
-      setIsToggled(!isToggled)
-    } catch (error) {
-      console.error('HighScores error: ', error)
-    }
-  }
-
-  // example create data
+  // example create data for newHighScore function test:
   const data = {
     username: 'test',
     score: 123,
@@ -71,35 +37,6 @@ export default function Home() {
     } catch (error) {
       console.error('newHighScore error: ', error)
     }
-  }
-
-  //check API response:
-  const getTestScore = async () => {
-    try {
-      const res = await fetch(
-        `${getEnvironment.currentEnvironment}/api/collections/quiz/records`,
-        {
-          method: 'GET',
-          cache: 'no-store',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      console.log('test result:' + res)
-      const data = await res.json()
-      mapGetData(data.items)
-    } catch (error) {
-      console.error('Error: ', error)
-    }
-  }
-
-  function mapGetData(items) {
-    const listedGetData = items.map((item) => {
-      return item.score
-    })
-    console.log(listedGetData)
-    setGetData(listedGetData)
   }
 
   //fetch api data:
@@ -199,16 +136,9 @@ export default function Home() {
   // check if selected answer is correct or not:
   const givenAnswer = (answer) => {
     setDisabledClass(true)
-    // console.log('answer passed is: ', answer)
-    // console.log('answer passed is: ', answer.rightAnswer)
-    // console.log('answer options are: ', activeQuestion['answers'])
     const defoCorrect = activeQuestion['answers'].find(
       (item) => item.rightAnswer === true
     )
-    // console.log('defoCorrect is: ', defoCorrect)
-    // console.log('actual correct answer is: ', defoCorrect.rightAnswer)
-
-    // console.log('user selected answer was: ', answer)
 
     if (answer.rightAnswer === defoCorrect.rightAnswer) {
       // console.log('yeeee buddy!')
@@ -246,49 +176,9 @@ export default function Home() {
         </div>
       </div>
 
-      {/* <div>
-        <button onClick={HighScores} className={styles.btn}>
-          {!endGame ? 'Show Score' : 'Hide Score'}
-        </button>
-        <h1>High Scores</h1>
-        <p>{JSON.stringify(scores)}</p>
-      </div> */}
-      <div>
-        <button onClick={HighScores} className={styles.btn}>
-          Show HighScore
-          {/* {isToggled ? <p>{JSON.stringify(highScore)}</p> : ''} */}
-          {isToggled ? (
-            <>
-              {highScore?.map((score) => {
-                return (
-                  <>
-                    <p>id: {score.id}</p>
-                    <p>Username: {score.username}</p>
-                    <p>Score: {score.score}</p>
-                  </>
-                )
-              })}
-            </>
-          ) : (
-            ''
-          )}
-        </button>
-      </div>
       <div>
         <button onClick={newHighScore} className={styles.btn}>
           Add new High Score
-        </button>
-      </div>
-      <div>
-        <button onClick={getTestScore} className={styles.btn}>
-          Show GET req Score:
-          {getData?.map((score) => {
-            return (
-              <>
-                <p>{score}</p>
-              </>
-            )
-          })}
         </button>
       </div>
 
