@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Card from './components/Card'
 import Link from 'next/link'
 import pb from 'lib/pocketbase.js'
+import AddScore from './components/AddScore'
 
 require('dotenv').config()
 
@@ -187,6 +188,7 @@ export default function Home() {
           <div>
             <h3>Congratulations!</h3>
             <h2>Score {score}</h2>
+            <AddScore score={score} />
             <Link href='/scores' className={styles.btnLink}>
               High Scores
             </Link>
