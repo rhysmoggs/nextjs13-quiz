@@ -6,6 +6,7 @@ import Card from './components/Card'
 import Link from 'next/link'
 import pb from 'lib/pocketbase.js'
 import AddScore from './components/AddScore'
+import { addScoreFunction } from './api/crud'
 
 require('dotenv').config()
 
@@ -24,20 +25,20 @@ export default function Home() {
 
   //clean up functions and seperate into componenets or pages once tested:
 
+  //trialing creating new record to pocketbase db:
+  // async function newHighScore() {
+  //   try {
+  //     const record = pb.collection('quiz').create(data)
+  //     return record
+  //   } catch (error) {
+  //     console.error('newHighScore error: ', error)
+  //   }
+  // }
+
   // example create data for newHighScore function test:
-  const data = {
+  const testData = {
     username: 'test',
     score: 123,
-  }
-
-  //trialing creating new record to pocketbase db:
-  async function newHighScore() {
-    try {
-      const record = pb.collection('quiz').create(data)
-      return record
-    } catch (error) {
-      console.error('newHighScore error: ', error)
-    }
   }
 
   //fetch api data:
@@ -178,7 +179,7 @@ export default function Home() {
       </div>
 
       <div>
-        <button onClick={newHighScore} className={styles.btn}>
+        <button onClick={addScoreFunction} className={styles.btn}>
           Add new High Score
         </button>
       </div>

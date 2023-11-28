@@ -1,18 +1,37 @@
 import React, { useState } from 'react'
 
-function AddScore({ score }) {
+function AddScore({ score, addScore }) {
   const [username, setUsername] = useState('')
-  console.log('passed score: ', score)
+
+  const onSubmit = () => {
+    e.preventDefault()
+
+    //validate form:
+    if (!username) {
+      alert('Please enter your username')
+      return
+    }
+
+    addScore({ score, username })
+
+    //clear form after user input:
+    setUsername('')
+  }
+
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <div>
         <label>Username: </label>
-        <input type='text' value={username} />
+        <input
+          type='text'
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
       </div>
       {/* dont really need to add score, as it will be displayed anyway: */}
       <div>
         <label>Score: </label>
-        <input type='text' value={score} readonly />
+        <input type='text' value={score} readOnly />
       </div>
       <input type='submit' value='Save Score' />
     </form>
