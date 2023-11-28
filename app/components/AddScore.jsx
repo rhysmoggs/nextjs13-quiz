@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-function AddScore({ score, addScore }) {
+const AddScore = ({ score, addHighScore }) => {
   const [username, setUsername] = useState('')
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
     e.preventDefault()
 
     //validate form:
@@ -12,7 +12,8 @@ function AddScore({ score, addScore }) {
       return
     }
 
-    addScore({ score, username })
+    addHighScore({ score, username })
+    console.log('High Score added!')
 
     //clear form after user input:
     setUsername('')

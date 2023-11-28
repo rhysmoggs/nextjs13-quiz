@@ -4,9 +4,9 @@ import styles from './page.module.css'
 import { useState } from 'react'
 import Card from './components/Card'
 import Link from 'next/link'
-import pb from 'lib/pocketbase.js'
+// import pb from 'lib/pocketbase.js'
 import AddScore from './components/AddScore'
-import { addScoreFunction } from './api/crud'
+import getEnvironment from './getEnvironment.config.js'
 
 require('dotenv').config()
 
@@ -25,20 +25,24 @@ export default function Home() {
 
   //clean up functions and seperate into componenets or pages once tested:
 
-  //trialing creating new record to pocketbase db:
-  // async function newHighScore() {
-  //   try {
-  //     const record = pb.collection('quiz').create(data)
-  //     return record
-  //   } catch (error) {
-  //     console.error('newHighScore error: ', error)
-  //   }
-  // }
-
-  // example create data for newHighScore function test:
-  const testData = {
-    username: 'test',
-    score: 123,
+  const addHighScore = async (data) => {
+    //function to fetch scores:
+    try {
+      const response = await fetch(
+        `${getEnvironment.currentEnvironment}/api/collections/quiz/records`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }
+      )
+      const result = await response.json()
+      return result
+    } catch (error) {
+      console.error('Error: ', error)
+    }
   }
 
   //fetch api data:
@@ -178,23 +182,12 @@ export default function Home() {
         </div>
       </div>
 
-      <div>
-        <button onClick={addScoreFunction} className={styles.btn}>
-          Add new High Score
-        </button>
-      </div>
-
       <div className={styles.center}>
         {endGame && (
           <div>
             <h3>Congratulations!</h3>
             <h2>Score {score}</h2>
-            <AddScore score={score} />
-            <Link href='/scores' className={styles.btnLink}>
-              High Scores
-            </Link>
-            {/* //add name form to save to highscore board: */}
-            {/* //save button for name input: */}
+            <AddScore score={score} addHighScore={addHighScore} />
           </div>
         )}
         {loading && <p>Loading...</p>}
