@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import styles from '/app/page.module.css'
 
 const AddScore = ({ score, addHighScore }) => {
   const [username, setUsername] = useState('')
@@ -20,8 +21,8 @@ const AddScore = ({ score, addHighScore }) => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <div>
+    <form className={styles.formContainer} onSubmit={onSubmit}>
+      <div className={styles.formInputs}>
         <label>Username: </label>
         <input
           type='text'
@@ -30,7 +31,7 @@ const AddScore = ({ score, addHighScore }) => {
         />
       </div>
       {/* dont really need to add score, as it will be displayed anyway: */}
-      <div>
+      <div className={styles.formInputs}>
         <label>Score: </label>
         <input type='text' value={score} readOnly />
       </div>
