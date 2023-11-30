@@ -3,8 +3,10 @@ import styles from '/app/page.module.css'
 
 const AddScore = ({ score, addHighScore }) => {
   const [username, setUsername] = useState('')
+  const [submitting, isSubmitting] = useState(false)
+  const [hiddenForm, ishiddenForm] = useState(false)
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
     //validate form:
@@ -13,7 +15,16 @@ const AddScore = ({ score, addHighScore }) => {
       return
     }
 
-    addHighScore({ score, username })
+    isSubmitting(true)
+
+    addHighScore({ score, username }).then(
+      setTimeout(() => {
+        //alter Submit button txt
+        isSubmitting(false)
+        //hide form and display msg
+        ishiddenForm(true)
+      }, 1500)
+    )
     console.log('High Score added!')
 
     //clear form after user input:
@@ -21,22 +32,31 @@ const AddScore = ({ score, addHighScore }) => {
   }
 
   return (
-    <form className={styles.formContainer} onSubmit={onSubmit}>
-      <div className={styles.formInputs}>
-        <label>Username: </label>
-        <input
-          type='text'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      {/* dont really need to add score, as it will be displayed anyway: */}
-      <div className={styles.formInputs}>
-        <label>Score: </label>
-        <input type='text' value={score} readOnly />
-      </div>
-      <input type='submit' value='Save Score' />
-    </form>
+    <div className={styles.formContainer}>
+      {!hiddenForm ? (
+        <form onSubmit={handleSubmit}>
+          <div className={styles.formInputs}>
+            <label>Username: </label>
+            <input
+              type='text'
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          {/* dont really need to add score, as it will be displayed anyway: */}
+          <div className={styles.formInputs}>
+            <label>Score: </label>
+            <input type='text' value={score} readOnly />
+          </div>
+          <input
+            type='submit'
+            value={!submitting ? 'Save Score' : 'Submitting...'}
+          />
+        </form>
+      ) : (
+        <p>Successfully added!</p>
+      )}
+    </div>
   )
 }
 
