@@ -4,7 +4,6 @@ import styles from './page.module.css'
 import { useState } from 'react'
 import Card from './components/Card'
 import Link from 'next/link'
-// import pb from 'lib/pocketbase.js'
 import AddScore from './components/AddScore'
 import getEnvironment from './getEnvironment.config.js'
 
@@ -149,7 +148,7 @@ export default function Home() {
     if (answer.rightAnswer === defoCorrect.rightAnswer) {
       // console.log('yeeee buddy!')
 
-      setScore(score + 1)
+      setScore(score + 1000)
     } else {
       // console.log('nahhh')
       //write logic for wrong answer or visual UX?
@@ -182,56 +181,58 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={styles.center}>
-        {endGame && (
-          <div>
-            <h3>Congratulations!</h3>
-            <h2>Score {score}</h2>
-            <AddScore score={score} addHighScore={addHighScore} />
-          </div>
-        )}
-        {loading && <p>Loading...</p>}
-        {/* if the game has started then show questions */}
-        {started ? (
-          <div>
-            <h2>
-              Progress Bar: {progress} / {totalQuestions}
-            </h2>
-            <h2>Score {score}</h2>
-            <h2>{activeQuestion && activeQuestion.question}</h2>
-            <div className={styles.grid}>
-              {activeQuestion &&
-                activeQuestion.answers.map((answer, index) => (
-                  <Card
-                    disabled={disabledClass}
-                    answer={answer}
-                    key={index}
-                    givenAnswer={givenAnswer}
-                    progress={progress}
-                  />
-                ))}
+      <div className={styles.gameArea}>
+        <div className={styles.container}>
+          {endGame && (
+            <div>
+              <h3>Congratulations!</h3>
+              <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+              <AddScore score={score} addHighScore={addHighScore} />
             </div>
-          </div>
-        ) : (
-          <div className={styles.menuContainer}>
-            <button onClick={getQuizAPI} className={styles.btn}>
-              {!endGame ? 'Start Game' : 'Restart'}
-            </button>
-            {!endGame && (
-              <>
-                <Link href='/' className={styles.btn}>
-                  How to Play
-                </Link>
-                <Link href='/' className={styles.btn}>
-                  Contact
-                </Link>
-                <Link href='/scores' className={styles.btn}>
-                  High Scores
-                </Link>
-              </>
-            )}
-          </div>
-        )}
+          )}
+          {loading && <p>Loading...</p>}
+          {/* if the game has started then show questions */}
+          {started ? (
+            <div>
+              <h2>
+                Question: {progress} / {totalQuestions}
+              </h2>
+              <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+              <h2>{activeQuestion && activeQuestion.question}</h2>
+              <div className={styles.grid}>
+                {activeQuestion &&
+                  activeQuestion.answers.map((answer, index) => (
+                    <Card
+                      disabled={disabledClass}
+                      answer={answer}
+                      key={index}
+                      givenAnswer={givenAnswer}
+                      progress={progress}
+                    />
+                  ))}
+              </div>
+            </div>
+          ) : (
+            <div className={styles.menuContainer}>
+              <button onClick={getQuizAPI} className={styles.btn}>
+                {!endGame ? 'Start Game' : 'Restart'}
+              </button>
+              {!endGame && (
+                <>
+                  <Link href='/' className={styles.btn}>
+                    How to Play
+                  </Link>
+                  <Link href='/' className={styles.btn}>
+                    Contact
+                  </Link>
+                  <Link href='/scores' className={styles.btn}>
+                    High Scores
+                  </Link>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </main>
   )

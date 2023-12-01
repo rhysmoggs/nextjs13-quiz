@@ -70,26 +70,6 @@ html {
   gap: 0.5rem;
 }
 
-.gameArea {
-  font-size: 2rem;
-  background-color: rgba(230, 236, 240, 0.95);
-  border-radius: 6px;
-  box-sizing: border-box;
-  width: 90%;
-  max-width: 830px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 3rem;
-  position: relative;
-  margin-bottom: 2%;
-}
-
-.gameContainer {
-  width: 85%;
-  margin: auto;
-  position: relative;
-}
-
 .globeLogo {
   height: 220px;
   width: 220px;

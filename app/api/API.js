@@ -1,5 +1,4 @@
 //server side
-
 import getEnvironment from 'app/getEnvironment.config.js'
 
 const getDataFromAPI = async () => {

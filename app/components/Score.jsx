@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from '../page.module.css'
+// import styles from './styles.css'
 
 const Score = ({ ...score }) => {
   // console.log('Score component score = ', score)
