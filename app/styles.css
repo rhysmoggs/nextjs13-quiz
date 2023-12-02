@@ -19,3 +19,25 @@ html {
   font-family: var(--font-primary);
   color: var(--text-primary-color);
 }
+
+body {
+  background-image: linear-gradient(
+      rgba(241, 236, 236, 0.3),
+      rgba(0, 0, 0, 0.7)
+    ),
+    url('../public/pexels-andrew-neel-2859169.jpg');
+  background-position: 0 0;
+  background-size: cover;
+  height: 100vh;
+  overflow: hidden;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem;
+  max-height: 80vh;
+  text-align: center;
+}

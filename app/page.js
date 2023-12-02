@@ -162,8 +162,8 @@ export default function Home() {
   const totalQuestions = 2
 
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
+    <main>
+      <div className={styles.logoArea}>
         <div>
           <h1 className={styles.heading}>
             <a href='#' rel='noopener noreferrer'>
@@ -213,7 +213,7 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <div className={styles.menuContainer}>
+            <div className={styles.container}>
               <button onClick={getQuizAPI} className={styles.btn}>
                 {!endGame ? 'Start Game' : 'Restart'}
               </button>
