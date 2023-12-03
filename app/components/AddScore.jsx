@@ -26,7 +26,7 @@ const AddScore = ({ score, addHighScore }) => {
         ishiddenForm(true)
       }, 1500)
     )
-    console.log('High Score added!')
+    // console.log('High Score added!')
 
     //clear form after user input:
     setUsername('')

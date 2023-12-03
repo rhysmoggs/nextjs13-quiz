@@ -1,3 +1,4 @@
+/* Logo area */
 .logoArea {
   font-size: 0.85rem;
   max-width: 1280px;
@@ -13,13 +14,13 @@
   gap: 0.5rem;
 }
 
-.heading {
+.logoHeading {
   color: rgba(230, 236, 240);
   overflow: visible;
   position: relative;
 }
 
-.globeLogo {
+.logoGlobe {
   height: 220px;
   width: 220px;
   cursor: pointer;
@@ -27,23 +28,17 @@
   box-shadow: -8px 0px 3rem 8px rgb(187 148 133);
 }
 
+/* Container */
+.container {
+  border: 1px solid red;
+  padding: 2rem;
+}
+
+/* Game area */
 .gameArea {
   font-size: 2rem;
   background-color: rgba(230, 236, 240, 0.95);
   border-radius: 6px;
-  box-sizing: border-box;
-  width: 90%;
-  max-width: 830px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 3rem;
-  position: relative;
-  margin-bottom: 2%;
-}
-
-.container {
-  border: 1px solid black;
-  padding: 2rem;
 }
 
 .scoreTally {
@@ -51,15 +46,15 @@
   text-shadow: -1.5px 1px 1px rgb(0, 0, 0);
   font-weight: bold;
   letter-spacing: 0.3rem;
-  margin-bottom: 0.6rem;
+  margin: 3rem 4rem;
   background: rgb(187 148 133 / 60%);
-  padding: 0 1rem;
+  padding: 1rem;
   text-transform: uppercase;
 }
 
 .span {
   text-align: center;
-  font-size: 1.9rem;
+  font-size: 2.9rem;
   position: absolute;
   left: 20%;
   right: 20%;
@@ -79,7 +74,6 @@
   padding: 1.2rem 1.6rem;
   border-radius: 6px;
   background: rgba(var(--card-rgb), 0);
-  /* border: 1px solid rgba(var(--card-border-rgb), 0); */
   transition: background 200ms, border 200ms;
   margin: 0.5rem;
   border: 1px solid black;
@@ -108,19 +102,6 @@
   font-size: 1.2rem;
   line-height: 1.5;
   max-width: 30ch;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  position: relative;
-  padding: 4rem 0;
-}
-
-.center h2 {
-  margin-top: 1.2rem;
 }
 
 .btn,
@@ -169,10 +150,6 @@
 
 /* Mobile */
 @media (max-width: 700px) {
-  .content {
-    padding: 4rem;
-  }
-
   .grid {
     grid-template-columns: 1fr;
     margin-bottom: 120px;
@@ -186,24 +163,6 @@
 
   .card h2 {
     margin-bottom: 0.5rem;
-  }
-
-  .center {
-    padding: 8rem 0 6rem;
-  }
-
-  .description {
-    font-size: 0.8rem;
-  }
-
-  .description a {
-    padding: 1rem;
-  }
-
-  .description div {
-    width: 100%;
-    pointer-events: none;
-    height: 200px;
   }
 }
 
@@ -220,11 +179,11 @@
   }
 }
 
-@keyframes rotate {
+/* @keyframes rotate {
   from {
     transform: rotate(360deg);
   }
   to {
     transform: rotate(0deg);
   }
-}
+} */

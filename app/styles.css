@@ -7,7 +7,7 @@
 
 :root {
   --background-color: black;
-  --text-primary-color: white;
+  --text-primary-color: black;
   --text-secondary-color: black;
   --correct-color: rgb(255, 210, 0);
   --font-primary: 'Poppins', sans-serif;

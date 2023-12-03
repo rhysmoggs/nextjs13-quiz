@@ -51,7 +51,7 @@ export default function Home() {
       const response = await fetch(
         'https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple'
       )
-      console.log('questions response clg: ', response)
+      // console.log('questions response clg: ', response)
       const data = await response.json()
       const results = data.results
 
@@ -61,7 +61,6 @@ export default function Home() {
         //add
         const correct = { answer: q.correct_answer, rightAnswer: true }
         const incorrect = q.incorrect_answers.map((i) => {
-          // return { incorrect_answers: i, rightAnswer: 'false' }
           return i
         })
 
@@ -116,7 +115,6 @@ export default function Home() {
       //reset score, progress and questions to 0/null:
       setQuestions([])
       setProgress(0)
-      // setScore(0)
       // console.log('end game')
       //run end game function:
 
@@ -164,75 +162,71 @@ export default function Home() {
   return (
     <main>
       <div className={styles.logoArea}>
-        <div>
-          <h1 className={styles.heading}>
-            <a href='#' rel='noopener noreferrer'>
-              <Image
-                src='/logo.png'
-                alt='Globe Trotters Logo'
-                className={styles.globeLogo}
-                width={220}
-                height={220}
-                priority
-              />
-            </a>
-            <span className={styles.span}>Globe Trotter Quiz</span>
-          </h1>
-        </div>
+        <h1 className={styles.logoHeading}>
+          <a href='#' rel='noopener noreferrer'>
+            <Image
+              src='/logo.png'
+              alt='Globe Trotters Logo'
+              className={styles.logoGlobe}
+              width={220}
+              height={220}
+              priority
+            />
+          </a>
+          <span className={styles.span}>Globe Trotter Quiz</span>
+        </h1>
       </div>
 
       <div className={styles.gameArea}>
-        <div className={styles.container}>
-          {endGame && (
-            <div>
-              <h3>Congratulations!</h3>
-              <h2 className={styles.scoreTally}>{score} miles travelled</h2>
-              <AddScore score={score} addHighScore={addHighScore} />
+        {endGame && (
+          <div className={styles.container}>
+            <h3>Congratulations!</h3>
+            <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+            <AddScore score={score} addHighScore={addHighScore} />
+          </div>
+        )}
+        {loading && <p>Loading...</p>}
+        {/* if the game has started then show questions */}
+        {started ? (
+          <div>
+            <h2>
+              Question: {progress} / {totalQuestions}
+            </h2>
+            <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+            <h2>{activeQuestion && activeQuestion.question}</h2>
+            <div className={styles.grid}>
+              {activeQuestion &&
+                activeQuestion.answers.map((answer, index) => (
+                  <Card
+                    disabled={disabledClass}
+                    answer={answer}
+                    key={index}
+                    givenAnswer={givenAnswer}
+                    progress={progress}
+                  />
+                ))}
             </div>
-          )}
-          {loading && <p>Loading...</p>}
-          {/* if the game has started then show questions */}
-          {started ? (
-            <div>
-              <h2>
-                Question: {progress} / {totalQuestions}
-              </h2>
-              <h2 className={styles.scoreTally}>{score} miles travelled</h2>
-              <h2>{activeQuestion && activeQuestion.question}</h2>
-              <div className={styles.grid}>
-                {activeQuestion &&
-                  activeQuestion.answers.map((answer, index) => (
-                    <Card
-                      disabled={disabledClass}
-                      answer={answer}
-                      key={index}
-                      givenAnswer={givenAnswer}
-                      progress={progress}
-                    />
-                  ))}
-              </div>
-            </div>
-          ) : (
-            <div className={styles.container}>
-              <button onClick={getQuizAPI} className={styles.btn}>
-                {!endGame ? 'Start Game' : 'Restart'}
-              </button>
-              {!endGame && (
-                <>
-                  <Link href='/' className={styles.btn}>
-                    How to Play
-                  </Link>
-                  <Link href='/' className={styles.btn}>
-                    Contact
-                  </Link>
-                  <Link href='/scores' className={styles.btn}>
-                    High Scores
-                  </Link>
-                </>
-              )}
-            </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className={styles.container}>
+            <button onClick={getQuizAPI} className={styles.btn}>
+              {!endGame ? 'Start Game' : 'Restart'}
+            </button>
+            {!endGame && (
+              <>
+                <Link href='/' className={styles.btn}>
+                  How to Play
+                </Link>
+                <Link href='/' className={styles.btn}>
+                  Contact
+                </Link>
+                <Link href='/scores' className={styles.btn}>
+                  High Scores
+                </Link>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </main>
   )
