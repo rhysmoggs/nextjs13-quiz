@@ -2,7 +2,7 @@ import ScoreContainer from '../components/ScoreContainer'
 import Link from 'next/link'
 import styles from '../page.module.css'
 
-function page() {
+function Scores() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -16,4 +16,4 @@ function page() {
   )
 }
 
-export default page
+export default Scores

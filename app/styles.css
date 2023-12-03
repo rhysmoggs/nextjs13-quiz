@@ -8,7 +8,7 @@
 :root {
   --background-color: black;
   --text-primary-color: black;
-  --text-secondary-color: black;
+  --text-secondary-color: white;
   --correct-color: rgb(255, 210, 0);
   --font-primary: 'Poppins', sans-serif;
   --font-secondary: 'Abril Fatface', serif;
@@ -40,4 +40,5 @@ main {
   padding: 6rem;
   max-height: 80vh;
   text-align: center;
+  border: 3px solid red;
 }
