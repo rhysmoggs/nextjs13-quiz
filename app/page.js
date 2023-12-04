@@ -37,7 +37,7 @@ export default function Home() {
       <Logo />
 
       {loading && <p>Loading...</p>}
-      {/* if the game has started then show questions */}
+
       <div className={styles.gameArea}>
         <div className={styles.container}>
           <Link href='/game' className={styles.btn}>
