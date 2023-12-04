@@ -4,6 +4,9 @@ import GetQuizQs from '../api/GetQuizQs'
 import { useEffect, useState } from 'react'
 import styles from '../page.module.css'
 import Logo from '../components/Logo'
+import Link from 'next/link'
+import AddScore from '../components/AddScore'
+import getEnvironment from '../getEnvironment.config.js'
 
 function Game() {
   const [questions, setQuestions] = useState([])
@@ -128,37 +131,75 @@ function Game() {
     }, 1000)
   }
 
+  const addHighScore = async (data) => {
+    //function to fetch scores:
+    try {
+      const response = await fetch(
+        `${getEnvironment.currentEnvironment}/api/collections/quiz/records`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }
+      )
+      const result = await response.json()
+      return result
+    } catch (error) {
+      console.error('Error: ', error)
+    }
+  }
+
   const totalQuestions = 2
 
   return (
     <main>
       <Logo />
-      <div className={styles.gameArea}>
-        <div className={styles.container}>
-          {loading && <p>Loading Quiz...</p>}
-          {started && (
-            <>
-              <h2>
-                Question: {progress} / {totalQuestions}
-              </h2>
-              <h2 className={styles.scoreTally}>{score} miles travelled</h2>
-              <h2>{activeQuestion && activeQuestion.question}</h2>
-              <div className={styles.grid}>
-                {activeQuestion &&
-                  activeQuestion.answers.map((answer, index) => (
-                    <Card
-                      disabled={disabledClass}
-                      answer={answer}
-                      key={index}
-                      givenAnswer={givenAnswer}
-                      progress={progress}
-                    />
-                  ))}
-              </div>
-            </>
-          )}
+      {started && (
+        <div className={styles.gameArea}>
+          {loading && <h2>Loading...</h2>}
+          <div className={styles.container}>
+            {/* if the game has started then show questions */}
+
+            <h2>
+              Question: {progress} / {totalQuestions}
+            </h2>
+            <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+            <h2>{activeQuestion && activeQuestion.question}</h2>
+            <div className={styles.grid}>
+              {activeQuestion &&
+                activeQuestion.answers.map((answer, index) => (
+                  <Card
+                    disabled={disabledClass}
+                    answer={answer}
+                    key={index}
+                    givenAnswer={givenAnswer}
+                    progress={progress}
+                  />
+                ))}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
+      {endGame && (
+        <div className={styles.gameArea}>
+          {loading && <p>Loading...</p>}
+          <div className={styles.container}>
+            <h3>Congratulations!</h3>
+            <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+            <AddScore score={score} addHighScore={addHighScore} />
+
+            <Link href='/game' className={styles.btn}>
+              Start
+            </Link>
+
+            <Link href='/scores' className={styles.btn}>
+              High Scores
+            </Link>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
