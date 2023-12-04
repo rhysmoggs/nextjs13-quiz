@@ -1,9 +1,9 @@
-import GameContainer from '../components/GameContainer'
+import Logo from '../components/Logo'
 
 function Game() {
   return (
     <main>
-      <GameContainer />
+      <Logo />
     </main>
   )
 }

@@ -5,7 +5,7 @@ import styles from '../page.module.css'
 const Score = ({ ...score }) => {
   // console.log('Score component score = ', score)
   return (
-    <div className={styles.card}>
+    <div className={styles.btn}>
       <p>Username: {score.username}</p>
       <p>Score: {score.score}</p>
     </div>

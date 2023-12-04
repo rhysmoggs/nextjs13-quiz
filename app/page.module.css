@@ -121,7 +121,7 @@
   background: var(--btn-background-color);
   width: 380px;
   max-width: 100%;
-  height: 60px;
+  /* height: 60px; */
   text-transform: uppercase;
   letter-spacing: 1.2px;
   margin: 0.8rem 0;

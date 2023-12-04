@@ -1,9 +1,9 @@
 'use client'
-import Image from 'next/image'
 import styles from './page.module.css'
 import { useState } from 'react'
 import Link from 'next/link'
 import getEnvironment from './getEnvironment.config.js'
+import Logo from './components/Logo'
 
 require('dotenv').config()
 
@@ -34,37 +34,25 @@ export default function Home() {
 
   return (
     <main>
-      <div className={styles.logoArea}>
-        <h1 className={styles.logoHeading}>
-          <a href='#' rel='noopener noreferrer'>
-            <Image
-              src='/logo.png'
-              alt='Globe Trotters Logo'
-              className={styles.logoGlobe}
-              width={220}
-              height={220}
-              priority
-            />
-          </a>
-          <span className={styles.span}>Globe Trotter Quiz</span>
-        </h1>
-      </div>
+      <Logo />
 
       {loading && <p>Loading...</p>}
       {/* if the game has started then show questions */}
-      <div className={styles.container}>
-        <Link href='/game' className={styles.btn}>
-          Start
-        </Link>
-        <Link href='/' className={styles.btn}>
-          How to Play
-        </Link>
-        <Link href='/' className={styles.btn}>
-          Contact
-        </Link>
-        <Link href='/scores' className={styles.btn}>
-          High Scores
-        </Link>
+      <div className={styles.gameArea}>
+        <div className={styles.container}>
+          <Link href='/game' className={styles.btn}>
+            Start
+          </Link>
+          <Link href='/' className={styles.btn}>
+            How to Play
+          </Link>
+          <Link href='/' className={styles.btn}>
+            Contact
+          </Link>
+          <Link href='/scores' className={styles.btn}>
+            High Scores
+          </Link>
+        </div>
       </div>
     </main>
   )
