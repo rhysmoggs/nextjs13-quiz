@@ -18,6 +18,16 @@ function Game() {
   const [endGame, setEndGame] = useState(false)
   //set state for answer
   const [disabledClass, setDisabledClass] = useState(false)
+  const [count, setCount] = useState(5)
+
+  //attempt at adding timer:
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount((prevCount) => prevCount - 1)
+    }, 1000)
+    setCount(3)
+    return () => clearInterval(intervalId)
+  }, [questions])
 
   //fetch api data:
   const getQuizAPI = async () => {
@@ -160,6 +170,7 @@ function Game() {
         <div className={styles.gameArea}>
           {loading && <h2>Loading...</h2>}
           <div className={styles.container}>
+            <p>Time left: {count} seconds</p>
             {/* if the game has started then show questions */}
 
             <h2>
