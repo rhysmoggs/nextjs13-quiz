@@ -7,6 +7,7 @@ import Logo from '../components/Logo'
 import Link from 'next/link'
 import AddScore from '../components/AddScore'
 import getEnvironment from '../getEnvironment.config.js'
+import Timer from '../components/Timer'
 
 function Game() {
   const [questions, setQuestions] = useState([])
@@ -20,7 +21,7 @@ function Game() {
   const [disabledClass, setDisabledClass] = useState(false)
   const [count, setCount] = useState(5)
 
-  //attempt at adding timer:
+  // // attempt at adding timer:
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCount((prevCount) => prevCount - 1)
@@ -171,6 +172,7 @@ function Game() {
           {loading && <h2>Loading...</h2>}
           <div className={styles.container}>
             <p>Time left: {count} seconds</p>
+            {/* <Timer /> */}
             {/* if the game has started then show questions */}
 
             <h2>
