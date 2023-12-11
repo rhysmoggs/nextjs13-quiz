@@ -1,6 +1,6 @@
+import styles from '../page.module.css'
 import ScoreContainer from '../components/ScoreContainer'
 import Link from 'next/link'
-import styles from '../page.module.css'
 import Logo from '../components/Logo'
 
 function Scores() {
