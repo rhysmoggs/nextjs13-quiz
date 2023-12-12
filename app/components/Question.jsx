@@ -3,18 +3,19 @@ import styles from '../page.module.css'
 import Card from './Card'
 // import styles from './styles.css'
 
-const Question = ({ ...question }) => {
-  // console.log(question[question])
-  // console.log(question.question)
+const Question = ({ questions }) => {
+  //test: take first question from object:
+  const newQ = questions[0]
+
   return (
-    <div className={styles.container}>
-      <h2>Question: {question.question}</h2>
-      <div>
-        {question.answers.map((answer, index) => {
+    <>
+      <h2>Question: {newQ.question}</h2>
+      <div className={styles.grid}>
+        {newQ.answers.map((answer, index) => {
           return <Card answer={answer} key={index} />
         })}
       </div>
-    </div>
+    </>
   )
 }
 

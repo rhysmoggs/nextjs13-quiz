@@ -1,7 +1,6 @@
 import GetQuizQs from '../api/GetQuizQs'
-// import Question from './Question'
-import styles from '../page.module.css'
-import Card from './Card'
+
+import Question from './Question'
 
 const QuestionsContainer = async () => {
   //fetch api data:
@@ -48,18 +47,17 @@ const QuestionsContainer = async () => {
   })
 
   return (
-    <div>
+    <>
       {/* {console.log('QUESTIONS-1: ', questions[0].question)} */}
-      <h2>Q: {questions[0].question}</h2>
-      {/* {questions.map((question, id) => {
-        return <Question key={id} {...question} />
-      })} */}
+      {/* <h2>Q: {questions[0].question}</h2>
       <div className={styles.grid}>
         {questions[0].answers.map((answer, index) => (
           <Card answer={answer} key={index} />
         ))}
-      </div>
-    </div>
+      </div> */}
+      {console.log('questions: ', questions)}
+      <Question questions={questions} />
+    </>
   )
 }
 
