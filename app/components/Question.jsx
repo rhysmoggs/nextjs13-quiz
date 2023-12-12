@@ -4,12 +4,10 @@ import Card from './Card'
 // import styles from './styles.css'
 
 const Question = ({ ...question }) => {
-  // console.log('Score component score = ', score)
-  console.log('question: ', question)
-  console.log('question.question: ', question.question)
-  console.log('question.answers : ', question.answers)
+  // console.log(question[question])
+  // console.log(question.question)
   return (
-    <div className={styles.btn}>
+    <div className={styles.container}>
       <h2>Question: {question.question}</h2>
       <div>
         {question.answers.map((answer, index) => {
