@@ -1,4 +1,5 @@
 import GetQuizQs from '../api/GetQuizQs'
+import Question from './Question'
 
 const QuestionsContainer = async () => {
   //fetch api data:
@@ -48,10 +49,12 @@ const QuestionsContainer = async () => {
   return (
     <div>
       {questions.map((question) => console.log(question))}
-      {questions.map((question, id) => {
+      {/* {questions.map((question, id) => {
         return <ul key={id}>Question: {question.question}</ul>
+      })} */}
+      {questions.map((question, id) => {
+        return <Question key={question.id} {...question} />
       })}
-      {questions.answers}
     </div>
   )
 }
