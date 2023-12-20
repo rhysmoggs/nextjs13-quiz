@@ -2,7 +2,7 @@
 import styles from '../page.module.css'
 // import styles from './styles.css'
 
-const Card = ({ answer, index }) => {
+const Card = ({ answer, index, onNext }) => {
   const handleClick = () => {
     console.log('clicked card')
   }
@@ -11,6 +11,7 @@ const Card = ({ answer, index }) => {
       key={index}
       href='#'
       onClick={handleClick}
+      onNext={onNext}
       className={styles.card}
       rel='noopener noreferrer'
     >

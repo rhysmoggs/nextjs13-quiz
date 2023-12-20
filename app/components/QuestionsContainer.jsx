@@ -1,12 +1,12 @@
+'use client'
 import GetQuizQs from '../api/GetQuizQs'
-
 import Question from './Question'
 
 const QuestionsContainer = async () => {
   //fetch api data:
   const results = await GetQuizQs()
 
-  const questions = results.map((q) => {
+  const questions = results?.map((q) => {
     const question = q.question
 
     //add
@@ -46,17 +46,16 @@ const QuestionsContainer = async () => {
     return { question, answers }
   })
 
+  const testQsContainer = () => {
+    console.log('clicked top lvl')
+  }
+
   return (
     <>
       {/* {console.log('QUESTIONS-1: ', questions[0].question)} */}
-      {/* <h2>Q: {questions[0].question}</h2>
-      <div className={styles.grid}>
-        {questions[0].answers.map((answer, index) => (
-          <Card answer={answer} key={index} />
-        ))}
-      </div> */}
-      {console.log('questions: ', questions)}
-      <Question questions={questions} />
+
+      {/* {console.log('questions: ', questions)} */}
+      <Question questions={questions} onNext={testQsContainer} />
     </>
   )
 }
