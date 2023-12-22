@@ -1,20 +1,34 @@
-'use client'
 import React from 'react'
 import styles from '../page.module.css'
 import Card from './Card'
-// import styles from './styles.css'
 
-const Question = ({ questions, onNext }) => {
-  const newQ = questions[0]
-
+const Question = ({ questions }) => {
+  const oneQ = questions[0]
   return (
     <>
-      <h2>Question: {newQ.question}</h2>
+      {/* {questions?.map((question) => {
+        console.log('mapped Q: ', question)
+      })} */}
+      {oneQ?.map((question) => {
+        return (
+          <>
+            <h2>{question}</h2>
+            <div className={styles.grid}>
+              {question.answers.map((answer, index) => {
+                return <Card answer={answer} key={index} />
+              })}
+            </div>
+          </>
+        )
+      })}
+
+      {/* <h2>Question: {newQ?.question}</h2>
       <div className={styles.grid}>
-        {newQ.answers.map((answer, index) => {
-          return <Card answer={answer} key={index} onNext={onNext} />
+        {newQ?.answers.map((answer, index) => {
+          return <Card answer={answer} key={index} />
         })}
-      </div>
+      </div> */}
+      {console.log('Question Container', questions)}
     </>
   )
 }
