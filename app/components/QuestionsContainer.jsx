@@ -8,6 +8,7 @@ const QuestionsContainer = () => {
   const [firstQ, setFirstQ] = useState()
   const [started, setStarted] = useState(false)
   //fetch api data:
+
   useEffect(() => {
     const getQuestions = async () => {
       const results = await GetQuizQs()
@@ -30,23 +31,17 @@ const QuestionsContainer = () => {
       setQuizQuestions(questions)
     }
     getQuestions()
-    setStarted(true)
   }, [])
-
-  // useEffect(() => {
-  //   const newQuestion = (quizQuestions) => {
-  //     const newQ = quizQuestions?.map((question) => console.log(question))
-  //     setFirstQ(newQ)
-  //   }
-  //   newQuestion()
-  //   setStarted(true)
-  // }, [])
 
   //declare function to get one set of questions from , then pass as props to Question container
 
   return (
     <>
-      {console.log('firstQ: ', firstQ)}
+      {console.log('quizQuestions: ', quizQuestions)}
+      {quizQuestions?.map((question) => {
+        return <Question question={question} />
+      })}
+
       {/* {started ? <Question questions={quizQuestions} /> : <h2>Loading...</h2>} */}
     </>
   )
