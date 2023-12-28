@@ -12,7 +12,7 @@ const Question = ({ question }) => {
           return <Card answer={answer} key={index} />
         })}
       </div> */}
-      {console.log('Question Container', question)}
+      {console.log('Question Container', question.question)}
     </>
   )
 }

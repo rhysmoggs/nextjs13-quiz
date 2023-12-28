@@ -38,8 +38,8 @@ const QuestionsContainer = () => {
   return (
     <>
       {console.log('quizQuestions: ', quizQuestions)}
-      {quizQuestions?.map((question) => {
-        return <Question question={question} />
+      {quizQuestions?.map((question, index) => {
+        return <Question question={question} key={index} />
       })}
 
       {/* {started ? <Question questions={quizQuestions} /> : <h2>Loading...</h2>} */}
