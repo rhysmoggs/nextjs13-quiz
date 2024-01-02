@@ -5,14 +5,39 @@ import Question from './Question'
 
 const QuestionsContainer = () => {
   const [quizQuestions, setQuizQuestions] = useState()
+  const [activeQuestion, setActiveQuestion] = useState()
   const [firstQ, setFirstQ] = useState()
   const [started, setStarted] = useState(false)
   //fetch api data:
 
+  // useEffect(() => {
+  //   const getQuestions = async () => {
+  //     const results = await GetQuizQs()
+  //     const questions = results?.map((q) => {
+  //       const question = q.question
+
+  //       //add
+  //       const correct = { answer: q.correct_answer, rightAnswer: true }
+  //       const incorrect = q.incorrect_answers.map((i) => {
+  //         return i
+  //       })
+
+  //       const lastIncorrect = incorrect.map((inc) => {
+  //         return { answer: inc, rightAnswer: false }
+  //       })
+  //       const answers = [...lastIncorrect, correct]
+
+  //       return { question, answers }
+  //     })
+  //     setQuizQuestions(questions)
+  //   }
+  //   getQuestions()
+  // }, [])
+
   useEffect(() => {
     const getQuestions = async () => {
       const results = await GetQuizQs()
-      const questions = results?.map((q) => {
+      const questions = await results?.map((q) => {
         const question = q.question
 
         //add
@@ -28,19 +53,27 @@ const QuestionsContainer = () => {
 
         return { question, answers }
       })
-      setQuizQuestions(questions)
+      return questions
     }
-    getQuestions()
+    const getOneQ = async () => {
+      const results = await getQuestions()
+      const soloQuestion = results[0]
+      setActiveQuestion(soloQuestion)
+      console.log(activeQuestion)
+    }
+    getOneQ()
+    setStarted(true)
   }, [])
 
   //declare function to get one set of questions from , then pass as props to Question container
 
   return (
     <>
-      {console.log('quizQuestions: ', quizQuestions)}
-      {quizQuestions?.map((question, index) => {
-        return <Question question={question} key={index} />
-      })}
+      {console.log('activeQuestion: ', activeQuestion)}
+      {started && <Question question={activeQuestion} />}
+      {/* {activeQuestion?.map((question) => {
+        return <Question question={question} />
+      })} */}
 
       {/* {started ? <Question questions={quizQuestions} /> : <h2>Loading...</h2>} */}
     </>
