@@ -57,7 +57,7 @@ const QuestionsContainer = () => {
     }
     const getOneQ = async () => {
       const results = await getQuestions()
-      const soloQuestion = results[0]
+      const soloQuestion = await results[0]
       //try this, or should it be done on getquizqs.js api section:
       // const serializedQ = JSON.stringify(soloQuestion)
       setActiveQuestion(soloQuestion)
