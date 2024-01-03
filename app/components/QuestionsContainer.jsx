@@ -5,7 +5,7 @@ import Question from './Question'
 
 const QuestionsContainer = () => {
   const [quizQuestions, setQuizQuestions] = useState()
-  const [activeQuestion, setActiveQuestion] = useState()
+  const [activeQuestion, setActiveQuestion] = useState([])
   const [firstQ, setFirstQ] = useState()
   const [started, setStarted] = useState(false)
   //fetch api data:
@@ -58,6 +58,8 @@ const QuestionsContainer = () => {
     const getOneQ = async () => {
       const results = await getQuestions()
       const soloQuestion = results[0]
+      //try this, or should it be done on getquizqs.js api section:
+      // const serializedQ = JSON.stringify(soloQuestion)
       setActiveQuestion(soloQuestion)
       console.log(activeQuestion)
     }
