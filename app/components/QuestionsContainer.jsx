@@ -57,11 +57,13 @@ const QuestionsContainer = () => {
     }
     const getOneQ = async () => {
       const results = await getQuestions()
-      const soloQuestion = await results[0]
-      //try this, or should it be done on getquizqs.js api section:
-      // const serializedQ = JSON.stringify(soloQuestion)
-      setActiveQuestion(soloQuestion)
-      console.log(activeQuestion)
+      if (results !== undefined) {
+        const soloQuestion = await results[0]
+        setActiveQuestion(soloQuestion)
+        console.log(activeQuestion)
+      } else {
+        console.log('awaiting promise')
+      }
     }
     getOneQ()
     setStarted(true)
@@ -72,7 +74,7 @@ const QuestionsContainer = () => {
   return (
     <>
       {console.log('activeQuestion: ', activeQuestion)}
-      {started && <Question question={activeQuestion} />}
+      {started ? <Question question={activeQuestion} /> : <h2>Loading...</h2>}
       {/* {activeQuestion?.map((question) => {
         return <Question question={question} />
       })} */}
