@@ -2,9 +2,10 @@
 import styles from '../page.module.css'
 // import styles from './styles.css'
 
-const Card = ({ answer, index }) => {
+const Card = ({ answer, index, givenAnswer }) => {
   const handleClick = () => {
     console.log('clicked card')
+    givenAnswer(answer, index)
   }
   return (
     <a

@@ -71,10 +71,25 @@ const QuestionsContainer = () => {
 
   //declare function to get one set of questions from , then pass as props to Question container
 
+  //Check answer:
+  const givenAnswer = (answer) => {
+    const defoCorrect = activeQuestion['answers'].find(
+      (item) => item.rightAnswer === true
+    )
+
+    if (answer.rightAnswer === defoCorrect.rightAnswer) {
+      console.log('yeeee buddy!')
+    } else {
+      console.log('nahhh')
+    }
+  }
+
   return (
     <>
       {console.log('activeQuestion: ', activeQuestion)}
-      {started ? <Question question={activeQuestion} /> : <h2>Loading...</h2>}
+      {started && (
+        <Question question={activeQuestion} givenAnswer={givenAnswer} />
+      )}
       {/* {activeQuestion?.map((question) => {
         return <Question question={question} />
       })} */}
