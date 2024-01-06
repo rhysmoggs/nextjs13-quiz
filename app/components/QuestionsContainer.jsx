@@ -59,22 +59,22 @@ const QuestionsContainer = () => {
       setQuizQuestions(questions)
       console.log('internal clg: ', questions)
     }
-    const getOneQ = async (quizQuestions) => {
-      console.log('getOneQ quizQuestions: ', quizQuestions)
-      const results = await getQuestions()
-      if (results !== undefined) {
-        const soloQuestion = await results[0]
-        setActiveQuestion('activeQuestion: ', soloQuestion)
-        const newList = quizQuestions.slice(1)
-        setQuizQuestions('totalQuestionsLeft: ', newList)
-        console.log(activeQuestion)
-        setProgress(progress + 1)
-      } else {
-        console.log('awaiting promise')
-      }
-    }
-    // getQuestions()
-    getOneQ()
+    // const getOneQ = async (quizQuestions) => {
+    //   console.log('getOneQ quizQuestions: ', quizQuestions)
+    //   const results = await getQuestions()
+    //   if (results !== undefined) {
+    //     const soloQuestion = await results[0]
+    //     setActiveQuestion('activeQuestion: ', soloQuestion)
+    //     const newList = quizQuestions.slice(1)
+    //     setQuizQuestions('totalQuestionsLeft: ', newList)
+    //     console.log(activeQuestion)
+    //     setProgress(progress + 1)
+    //   } else {
+    //     console.log('awaiting promise')
+    //   }
+    // }
+    getQuestions()
+    // getOneQ()
     // const getOneQ = async () => {
     //   const results = await getQuestions()
     //   if (results !== undefined) {
@@ -90,7 +90,21 @@ const QuestionsContainer = () => {
     setStarted(true)
   }, [])
 
-  //declare function to get one set of questions from , then pass as props to Question container
+  //declare function to get one set of questions from , then pass as props to Question container:
+  const getOneQ = async (quizQuestions) => {
+    console.log('getOneQ quizQuestions: ', quizQuestions)
+    const results = await getQuestions()
+    if (results !== undefined) {
+      const soloQuestion = await results[0]
+      setActiveQuestion('activeQuestion: ', soloQuestion)
+      const newList = quizQuestions.slice(1)
+      setQuizQuestions('totalQuestionsLeft: ', newList)
+      console.log(activeQuestion)
+      setProgress(progress + 1)
+    } else {
+      console.log('awaiting promise')
+    }
+  }
 
   //Check answer:
   const givenAnswer = (answer) => {
@@ -113,7 +127,8 @@ const QuestionsContainer = () => {
 
   return (
     <>
-      {console.log('activeQuestion: ', activeQuestion)}
+      {console.log('quizQuestions: ', quizQuestions)}
+      {/* {console.log('activeQuestion: ', activeQuestion)}
       {started && (
         <>
           <h2>
@@ -126,12 +141,12 @@ const QuestionsContainer = () => {
             progress={progress}
           />
         </>
-      )}
+      )} */}
       {/* {activeQuestion?.map((question) => {
         return <Question question={question} />
       })} */}
 
-      {/* {started ? <Question questions={quizQuestions} /> : <h2>Loading...</h2>} */}
+      {started ? <Question question={quizQuestions} /> : <h2>Loading...</h2>}
     </>
   )
 }
