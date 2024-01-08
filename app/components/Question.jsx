@@ -9,22 +9,22 @@ const Question = ({ question, givenAnswer, disabledClass, progress }) => {
     <>
       {
         <div>
-          {question?.map((question) => {
-            // console.log('mapped q: ', question.question)
-            // console.log('mapped q: ', question.answers)
+          {question?.map((question, index) => {
+            console.log('mapped q: ', question.question)
+            console.log('mapped a: ', question.answers)
             return (
-              <>
+              <div key={index}>
                 <h1>{question.question}</h1>
                 <div>
-                  {question.answers.map((answer) => {
+                  {question.answers.map((answer, index) => {
                     return (
-                      <ul>
-                        <li>{answer}</li>
+                      <ul key={index}>
+                        <li>{answer.answer}</li>
                       </ul>
                     )
                   })}
                 </div>
-              </>
+              </div>
             )
           })}
         </div>
