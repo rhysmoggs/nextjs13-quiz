@@ -4,10 +4,10 @@ import styles from '../page.module.css'
 import Card from './Card'
 
 const Question = ({ question, givenAnswer, disabledClass, progress }) => {
-  // console.log('question inside question: ', question)
+  console.log('question inside question: ', question)
   return (
     <>
-      {
+      {/* {
         <div>
           {question?.map((question, index) => {
             console.log('mapped q: ', question.question)
@@ -28,8 +28,8 @@ const Question = ({ question, givenAnswer, disabledClass, progress }) => {
             )
           })}
         </div>
-      }
-      {/* <h2>{question.question}</h2>
+      } */}
+      <h2>{question.question}</h2>
       <div className={styles.grid}>
         {question?.answers?.map((answer, index) => (
           <Card
@@ -40,7 +40,7 @@ const Question = ({ question, givenAnswer, disabledClass, progress }) => {
             progress={progress}
           />
         ))}
-      </div> */}
+      </div>
       {/* {JSON.parse(question)} */}
       {/* {console.log('Question Container', question)} */}
     </>
