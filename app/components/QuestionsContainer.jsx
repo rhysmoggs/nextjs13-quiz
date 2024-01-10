@@ -9,26 +9,46 @@ const QuestionsContainer = () => {
   const [firstQ, setFirstQ] = useState()
   const [started, setStarted] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [score, setScore] = useState(0)
   const [disabledClass, setDisabledClass] = useState(false)
   //fetch api data:
 
   const getQuestions = async () => {
     const results = await GetQuizQs()
-    return results
+    newQuestion(results)
+    // console.log('results:', results)
+    // return results
   }
 
   useEffect(() => {
-    const getOneQ = async () => {
-      const results = await getQuestions()
-      if (results != undefined) {
-        const soloQuestion = await results[0]
-        setActiveQuestion(soloQuestion)
-      } else {
-        console.log('awaiting promise')
-      }
-    }
-    getOneQ()
+    getQuestions()
   }, [])
+
+  //currently only taking one question from getQuestions function.
+  //need to create an array of all Qs, then slice.
+  // useEffect(() => {
+  //   const newQuestion = async () => {
+  //     const results = await getQuestions()
+  //     if (results != undefined) {
+  //       const soloQuestion = await results[0]
+  //       setActiveQuestion(soloQuestion)
+  //     } else {
+  //       console.log('awaiting promise')
+  //     }
+  //   }
+  //   newQuestion()
+  // }, [])
+
+  const newQuestion = (quizQuestions) => {
+    if (quizQuestions != undefined) {
+      console.log('quizQuestions: ', quizQuestions)
+      const soloQuestion = quizQuestions[0]
+      setActiveQuestion(soloQuestion)
+    } else {
+      console.log('awaiting promise')
+    }
+  }
+  // newQuestion()
 
   //declare function to get one set of questions from , then pass as props to Question container:
 
@@ -41,10 +61,12 @@ const QuestionsContainer = () => {
 
     if (answer.rightAnswer === defoCorrect.rightAnswer) {
       console.log('yeeee buddy!')
+      setScore(score + 2500)
     } else {
       console.log('nahhh')
     }
     setTimeout(() => {
+      newQuestion(quizQuestions)
       setDisabledClass(false)
     }, 1000)
   }
@@ -73,7 +95,12 @@ const QuestionsContainer = () => {
         return <Question question={question} />
       })} */}
 
-      {<Question question={activeQuestion} />}
+      <h2>
+        Question: {progress} / {totalQuestions}
+      </h2>
+      <h2>{score} miles travelled</h2>
+
+      {<Question question={activeQuestion} givenAnswer={givenAnswer} />}
     </>
   )
 }
