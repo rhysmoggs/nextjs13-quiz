@@ -6,6 +6,7 @@ import styles from '../page.module.css'
 const Card = ({ answer, index, givenAnswer, disabled, progress }) => {
   const [selected, setSelected] = useState(false)
   const handleClick = () => {
+    setSelected(true)
     console.log('clicked card')
     givenAnswer(answer, index)
   }

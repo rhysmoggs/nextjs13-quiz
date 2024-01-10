@@ -24,33 +24,27 @@ const QuestionsContainer = () => {
     getQuestions()
   }, [])
 
-  //currently only taking one question from getQuestions function.
-  //need to create an array of all Qs, then slice.
-  // useEffect(() => {
-  //   const newQuestion = async () => {
-  //     const results = await getQuestions()
-  //     if (results != undefined) {
-  //       const soloQuestion = await results[0]
-  //       setActiveQuestion(soloQuestion)
-  //     } else {
-  //       console.log('awaiting promise')
-  //     }
-  //   }
-  //   newQuestion()
-  // }, [])
-
+  //take one question from quizQuestions array:
   const newQuestion = (quizQuestions) => {
-    if (quizQuestions != undefined) {
-      console.log('quizQuestions: ', quizQuestions)
-      const soloQuestion = quizQuestions[0]
-      setActiveQuestion(soloQuestion)
+    if (progress === totalQuestions) {
+      setQuizQuestions([])
+      setProgress(0)
+      //set end game logic here:
     } else {
-      console.log('awaiting promise')
+      if (quizQuestions != undefined) {
+        console.log('quizQuestions: ', quizQuestions)
+        const soloQuestion = quizQuestions[0]
+        setActiveQuestion(soloQuestion)
+        //remove question from set of questions:
+        const newList = quizQuestions.slice(1)
+        // update:
+        setQuizQuestions(newList)
+        setProgress(progress + 1)
+      } else {
+        console.log('awaiting promise')
+      }
     }
   }
-  // newQuestion()
-
-  //declare function to get one set of questions from , then pass as props to Question container:
 
   //Check answer:
   const givenAnswer = (answer) => {
@@ -100,7 +94,14 @@ const QuestionsContainer = () => {
       </h2>
       <h2>{score} miles travelled</h2>
 
-      {<Question question={activeQuestion} givenAnswer={givenAnswer} />}
+      {
+        <Question
+          question={activeQuestion}
+          givenAnswer={givenAnswer}
+          disabled={disabledClass}
+          progress={progress}
+        />
+      }
     </>
   )
 }
