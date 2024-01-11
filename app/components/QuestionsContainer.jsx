@@ -16,14 +16,22 @@ const QuestionsContainer = () => {
   const [progress, setProgress] = useState(0)
   const [score, setScore] = useState(0)
   const [disabledClass, setDisabledClass] = useState(false)
-  //fetch api data:
+  const [count, setCount] = useState(5)
 
+  //attempt at adding timer:
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount((prevCount) => prevCount - 1)
+    }, 1000)
+    setCount(3)
+    return () => clearInterval(intervalId)
+  }, [quizQuestions])
+
+  //fetch api data:
   const getQuestions = async () => {
     const results = await GetQuizQs()
     newQuestion(results)
     setStarted(true)
-    // console.log('results:', results)
-    // return results
   }
 
   useEffect(() => {
@@ -99,6 +107,7 @@ const QuestionsContainer = () => {
     <>
       {started && (
         <>
+          <p>Time left: {count} seconds</p>
           <h2>
             Question: {progress} / {totalQuestions}
           </h2>
