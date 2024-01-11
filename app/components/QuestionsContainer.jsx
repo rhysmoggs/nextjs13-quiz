@@ -2,12 +2,17 @@
 import { useEffect, useState } from 'react'
 import GetQuizQs from '../api/GetQuizQs'
 import Question from './Question'
+import styles from '../page.module.css'
+import AddScore from './AddScore'
+import Link from 'next/link'
+import getEnvironment from '../getEnvironment.config.js'
 
 const QuestionsContainer = () => {
   const [quizQuestions, setQuizQuestions] = useState()
   const [activeQuestion, setActiveQuestion] = useState([])
-  const [firstQ, setFirstQ] = useState()
+  const [endGame, setEndGame] = useState(false)
   const [started, setStarted] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [score, setScore] = useState(0)
   const [disabledClass, setDisabledClass] = useState(false)
@@ -16,6 +21,7 @@ const QuestionsContainer = () => {
   const getQuestions = async () => {
     const results = await GetQuizQs()
     newQuestion(results)
+    setStarted(true)
     // console.log('results:', results)
     // return results
   }
@@ -29,6 +35,8 @@ const QuestionsContainer = () => {
     if (progress === totalQuestions) {
       setQuizQuestions([])
       setProgress(0)
+      setStarted(false)
+      setEndGame(true)
       //set end game logic here:
     } else {
       if (quizQuestions != undefined) {
@@ -65,18 +73,36 @@ const QuestionsContainer = () => {
     }, 1000)
   }
 
+  const addHighScore = async (data) => {
+    //function to fetch scores:
+    try {
+      const response = await fetch(
+        `${getEnvironment.currentEnvironment}/api/collections/quiz/records`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }
+      )
+      const result = await response.json()
+      return result
+    } catch (error) {
+      console.error('Error: ', error)
+    }
+  }
+
   const totalQuestions = 2
 
   return (
     <>
-      {console.log('quizQuestions: ', quizQuestions)}
-      {console.log('activeQuestion: ', activeQuestion)}
-      {/* {console.log('activeQuestion: ', activeQuestion)}
       {started && (
         <>
           <h2>
             Question: {progress} / {totalQuestions}
           </h2>
+          <h2>{score} miles travelled</h2>
           <Question
             question={activeQuestion}
             givenAnswer={givenAnswer}
@@ -84,24 +110,25 @@ const QuestionsContainer = () => {
             progress={progress}
           />
         </>
-      )} */}
-      {/* {activeQuestion?.map((question) => {
-        return <Question question={question} />
-      })} */}
+      )}
+      {endGame && (
+        <>
+          {loading && <p>Loading...</p>}
+          <>
+            <h3>Congratulations!</h3>
+            <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+            <AddScore score={score} addHighScore={addHighScore} />
 
-      <h2>
-        Question: {progress} / {totalQuestions}
-      </h2>
-      <h2>{score} miles travelled</h2>
+            <Link href='/' className={styles.btn}>
+              Home
+            </Link>
 
-      {
-        <Question
-          question={activeQuestion}
-          givenAnswer={givenAnswer}
-          disabled={disabledClass}
-          progress={progress}
-        />
-      }
+            <Link href='/scores' className={styles.btn}>
+              High Scores
+            </Link>
+          </>
+        </>
+      )}
     </>
   )
 }
