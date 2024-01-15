@@ -12,6 +12,7 @@ const QuestionsContainer = () => {
   const [activeQuestion, setActiveQuestion] = useState([])
   const [endGame, setEndGame] = useState(false)
   const [started, setStarted] = useState(false)
+  //integrate loading state:
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [score, setScore] = useState(0)
@@ -19,6 +20,8 @@ const QuestionsContainer = () => {
   const [count, setCount] = useState(5)
 
   //attempt at adding timer:
+  //check how to restart on every new question.
+  //either add to new question logic, add new timer container or ?
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCount((prevCount) => prevCount - 1)
