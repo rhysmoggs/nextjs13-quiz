@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import GetQuizQs from '../api/GetQuizQs'
 import Question from './Question'
 import styles from '../page.module.css'
@@ -19,47 +19,26 @@ const QuestionsContainer = () => {
   const [disabledClass, setDisabledClass] = useState(false)
   const [count, setCount] = useState(5)
 
-  // const [startTime] = useState(new Date())
-
-  // let refCount = useRef()
-
+  //set timer to countdown from 0 to 5 seconds and then End Game, unless answer is selected in that time frame, then clear:
   useEffect(() => {
-    endGameMsg()
-    const intervalId =
-      count > 0 &&
-      setInterval(() => {
-        setCount((prevCount) => prevCount - 1)
-      }, 1000)
-    return () => clearInterval(intervalId)
-  }, [count])
-
-  const resetTimer = () => {
-    setCount(5)
-  }
-  const endGameMsg = () => {
-    if (count === 0) {
+    // Exit early if countdown is finished
+    if (count <= 0) {
       console.log('END GAME')
-      //still need to clear intervalId?
+      //set end game logic:
+      setStarted(false)
+      setEndGame(true)
+      return
+      // return () => clearInterval(timer)
     }
-  }
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setCount(10 - (new Date().getUTCSeconds() - startTime.getUTCSeconds()))
-  //     console.log(count)
-  //   }, 1000)
-  //   return () => clearInterval(intervalId)
-  // }, [])
 
-  //attempt at adding timer:
-  //check how to restart on every new question.
-  //either add to new question logic, add new timer container or ?
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setCount((prevCount) => prevCount - 1)
-  //   }, 1000)
-  //   setCount(3)
-  //   return () => clearInterval(intervalId)
-  // }, [quizQuestions])
+    // Set up timer:
+    const timer = setInterval(() => {
+      setCount((prevCount) => prevCount - 1)
+    }, 1000)
+
+    // Clear timer history:
+    return () => clearInterval(timer)
+  }, [count])
 
   //fetch api data:
   const getQuestions = async () => {
@@ -91,7 +70,8 @@ const QuestionsContainer = () => {
         setQuizQuestions(newList)
         setProgress(progress + 1)
         //trial resetTimer:
-        resetTimer()
+        // resetTimer()
+        setCount(5)
       } else {
         console.log('awaiting promise')
       }
