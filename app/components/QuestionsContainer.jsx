@@ -26,6 +26,7 @@ const QuestionsContainer = () => {
       console.log('END GAME')
       //set end game logic:
       setStarted(false)
+      //alter msg in End Game to be "Time Out"
       setEndGame(true)
       return
       // return () => clearInterval(timer)
@@ -140,7 +141,11 @@ const QuestionsContainer = () => {
         <>
           {loading && <p>Loading...</p>}
           <>
-            <h3>Congratulations!</h3>
+            <h3>
+              {count <= 0
+                ? `Unlucky! You ran out of time.`
+                : `Congratulations!`}
+            </h3>
             <h2 className={styles.scoreTally}>{score} miles travelled</h2>
             <AddScore score={score} addHighScore={addHighScore} />
 
