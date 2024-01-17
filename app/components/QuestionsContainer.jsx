@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import GetQuizQs from '../api/GetQuizQs'
 import Question from './Question'
 import styles from '../page.module.css'
@@ -19,16 +19,47 @@ const QuestionsContainer = () => {
   const [disabledClass, setDisabledClass] = useState(false)
   const [count, setCount] = useState(5)
 
+  // const [startTime] = useState(new Date())
+
+  // let refCount = useRef()
+
+  useEffect(() => {
+    endGameMsg()
+    const intervalId =
+      count > 0 &&
+      setInterval(() => {
+        setCount((prevCount) => prevCount - 1)
+      }, 1000)
+    return () => clearInterval(intervalId)
+  }, [count])
+
+  const resetTimer = () => {
+    setCount(5)
+  }
+  const endGameMsg = () => {
+    if (count === 0) {
+      console.log('END GAME')
+      //still need to clear intervalId?
+    }
+  }
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setCount(10 - (new Date().getUTCSeconds() - startTime.getUTCSeconds()))
+  //     console.log(count)
+  //   }, 1000)
+  //   return () => clearInterval(intervalId)
+  // }, [])
+
   //attempt at adding timer:
   //check how to restart on every new question.
   //either add to new question logic, add new timer container or ?
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCount((prevCount) => prevCount - 1)
-    }, 1000)
-    setCount(3)
-    return () => clearInterval(intervalId)
-  }, [quizQuestions])
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setCount((prevCount) => prevCount - 1)
+  //   }, 1000)
+  //   setCount(3)
+  //   return () => clearInterval(intervalId)
+  // }, [quizQuestions])
 
   //fetch api data:
   const getQuestions = async () => {
@@ -59,6 +90,8 @@ const QuestionsContainer = () => {
         // update:
         setQuizQuestions(newList)
         setProgress(progress + 1)
+        //trial resetTimer:
+        resetTimer()
       } else {
         console.log('awaiting promise')
       }
@@ -104,7 +137,7 @@ const QuestionsContainer = () => {
     }
   }
 
-  const totalQuestions = 2
+  const totalQuestions = 5
 
   return (
     <>
