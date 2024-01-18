@@ -3,7 +3,7 @@ import React from 'react'
 import styles from '../page.module.css'
 import Card from './Card'
 
-const Question = ({ question, givenAnswer, disabledClass, progress }) => {
+const Question = ({ question, givenAnswer, disabled, progress }) => {
   return (
     <>
       <h2>{question.question}</h2>
@@ -13,7 +13,7 @@ const Question = ({ question, givenAnswer, disabledClass, progress }) => {
             answer={answer}
             key={index}
             givenAnswer={givenAnswer}
-            disabled={disabledClass}
+            disabled={disabled}
             progress={progress}
           />
         ))}

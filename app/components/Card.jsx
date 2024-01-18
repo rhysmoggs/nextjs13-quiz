@@ -13,6 +13,7 @@ const Card = ({ answer, index, givenAnswer, disabled, progress }) => {
   useEffect(() => {
     setSelected(false)
   }, [progress])
+
   return (
     <a
       key={index}

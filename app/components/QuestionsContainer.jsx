@@ -21,15 +21,11 @@ const QuestionsContainer = () => {
 
   //set timer to countdown from 0 to 5 seconds and then End Game, unless answer is selected in that time frame, then clear:
   useEffect(() => {
-    // Exit early if countdown is finished
+    // End Game if timer reaches 0:
     if (count <= 0) {
-      console.log('END GAME')
-      //set end game logic:
       setStarted(false)
-      //alter msg in End Game to be "Time Out"
       setEndGame(true)
       return
-      // return () => clearInterval(timer)
     }
 
     // Set up timer:
