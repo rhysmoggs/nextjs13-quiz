@@ -18,7 +18,7 @@ export default function Home() {
           <Link href='/' className={styles.btn}>
             How to Play
           </Link>
-          <Link href='/' className={styles.btn}>
+          <Link href='/contact' className={styles.btn}>
             Contact
           </Link>
           <Link href='/scores' className={styles.btn}>
