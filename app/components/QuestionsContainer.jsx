@@ -19,6 +19,8 @@ const QuestionsContainer = () => {
   const [disabledClass, setDisabledClass] = useState(false)
   const [count, setCount] = useState(5)
 
+  //need to test and improve. need to clear as if statement does not currently clear interval and end game msg will alter from "congrats" to "time's up"
+
   //set timer to countdown from 0 to 5 seconds and then End Game, unless answer is selected in that time frame, then clear:
   useEffect(() => {
     // End Game if timer reaches 0:
@@ -114,7 +116,7 @@ const QuestionsContainer = () => {
     }
   }
 
-  const totalQuestions = 5
+  const totalQuestions = 2
 
   return (
     <>
@@ -139,7 +141,8 @@ const QuestionsContainer = () => {
           <>
             <h3>
               {count <= 0
-                ? `Unlucky! You ran out of time.`
+                ? //Unlucky msg will show even if Congrats end game, as timer not cleared:
+                  `Unlucky! You ran out of time.`
                 : `Congratulations!`}
             </h3>
             <h2 className={styles.scoreTally}>{score} miles travelled</h2>
