@@ -15,7 +15,7 @@ export default function Home() {
           <Link href='/game' className={styles.btn}>
             Start
           </Link>
-          <Link href='/' className={styles.btn}>
+          <Link href='/howtoplay' className={styles.btn}>
             How to Play
           </Link>
           <Link href='/contact' className={styles.btn}>
