@@ -9,7 +9,8 @@ function Scores() {
       <Logo />
       <div className={styles.gameArea}>
         <div className={styles.container}>
-          <h1>High Scores: </h1>
+          <h2>High Scores: </h2>
+          <h4>showing top 5 highest scores </h4>
           <ScoreContainer />
           <Link href='/' className={styles.btnLink}>
             Home
