@@ -13,11 +13,12 @@ const QuestionsContainer = () => {
   const [endGame, setEndGame] = useState(false)
   const [started, setStarted] = useState(false)
   //integrate loading state:
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [progress, setProgress] = useState(0)
   const [score, setScore] = useState(0)
   const [disabledClass, setDisabledClass] = useState(false)
   const [count, setCount] = useState(5)
+  // const [spinner, setSpinner] = useState(true)
 
   //need to test and improve. need to clear as if statement does not currently clear interval and end game msg will alter from "congrats" to "time's up"
 
@@ -43,6 +44,7 @@ const QuestionsContainer = () => {
   const getQuestions = async () => {
     const results = await GetQuizQs()
     newQuestion(results)
+    setLoading(false)
     setStarted(true)
   }
 
@@ -120,6 +122,7 @@ const QuestionsContainer = () => {
 
   return (
     <>
+      {loading && <h2>Loading...</h2>}
       {started && (
         <>
           <p>Time left: {count} seconds</p>
@@ -137,25 +140,22 @@ const QuestionsContainer = () => {
       )}
       {endGame && (
         <>
-          {loading && <p>Loading...</p>}
-          <>
-            <h3>
-              {count <= 0
-                ? //Unlucky msg will show even if Congrats end game, as timer not cleared:
-                  `Unlucky! You ran out of time.`
-                : `Congratulations!`}
-            </h3>
-            <h2 className={styles.scoreTally}>{score} miles travelled</h2>
-            <AddScore score={score} addHighScore={addHighScore} />
+          <h3>
+            {count <= 0
+              ? //Unlucky msg will show even if Congrats end game, as timer not cleared:
+                `Unlucky! You ran out of time.`
+              : `Congratulations!`}
+          </h3>
+          <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+          <AddScore score={score} addHighScore={addHighScore} />
 
-            <Link href='/' className={styles.btn}>
-              Home
-            </Link>
+          <Link href='/' className={styles.btn}>
+            Home
+          </Link>
 
-            <Link href='/scores' className={styles.btn}>
-              High Scores
-            </Link>
-          </>
+          <Link href='/scores' className={styles.btn}>
+            High Scores
+          </Link>
         </>
       )}
     </>
