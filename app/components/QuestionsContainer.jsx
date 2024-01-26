@@ -129,7 +129,7 @@ const QuestionsContainer = () => {
           <h2>
             Question: {progress} / {totalQuestions}
           </h2>
-          <h2>{score} miles travelled</h2>
+          <h2 className={styles.scoreTally}>{score} miles travelled</h2>
           <Question
             question={activeQuestion}
             givenAnswer={givenAnswer}

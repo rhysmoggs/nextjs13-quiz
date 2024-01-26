@@ -11,6 +11,7 @@ function Scores() {
         <div className={styles.container}>
           <h2>High Scores: </h2>
           <h4>showing top 5 highest scores </h4>
+          <br />
           <ScoreContainer />
           <Link href='/' className={styles.btnLink}>
             Home
