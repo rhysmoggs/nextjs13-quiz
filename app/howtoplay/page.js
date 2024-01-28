@@ -28,7 +28,7 @@ function HowToPlay() {
             </p>
             <p>
               See if you can travel to the top of the{' '}
-              <span className={styles.goldBackground}>High Scores list!</span>
+              <span className={styles.goldBackground}>High Scores list</span>!
             </p>
           </div>
         </div>
