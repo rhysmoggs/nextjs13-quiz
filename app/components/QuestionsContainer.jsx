@@ -121,7 +121,7 @@ const QuestionsContainer = () => {
   const totalQuestions = 2
 
   return (
-    <>
+    <div className={styles.gameArea}>
       {loading && <h2>Loading...</h2>}
       {started && (
         <>
@@ -139,7 +139,7 @@ const QuestionsContainer = () => {
         </>
       )}
       {endGame && (
-        <>
+        <div className={styles.container}>
           <h3>
             {count <= 0
               ? //Unlucky msg will show even if Congrats end game, as timer not cleared:
@@ -156,9 +156,9 @@ const QuestionsContainer = () => {
           <Link href='/scores' className={styles.btn}>
             High Scores
           </Link>
-        </>
+        </div>
       )}
-    </>
+    </div>
   )
 }
 

@@ -6,11 +6,8 @@ function Game() {
   return (
     <main>
       <Logo />
-      <div className={styles.gameArea}>
-        <div className={styles.container}>
-          <QuestionsContainer />
-        </div>
-      </div>
+
+      <QuestionsContainer />
     </main>
   )
 }

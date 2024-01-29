@@ -37,7 +37,7 @@ main {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
+  padding: 2rem;
   max-height: 80vh;
   text-align: center;
 }
