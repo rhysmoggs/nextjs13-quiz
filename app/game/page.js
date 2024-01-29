@@ -6,7 +6,6 @@ function Game() {
   return (
     <main>
       <Logo />
-
       <QuestionsContainer />
     </main>
   )

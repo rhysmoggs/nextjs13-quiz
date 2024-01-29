@@ -122,42 +122,44 @@ const QuestionsContainer = () => {
 
   return (
     <div className={styles.gameArea}>
-      {loading && <h2>Loading...</h2>}
-      {started && (
-        <>
-          <p>Time left: {count} seconds</p>
-          <h2>
-            Question: {progress} / {totalQuestions}
-          </h2>
-          <h2 className={styles.scoreTally}>{score} miles travelled</h2>
-          <Question
-            question={activeQuestion}
-            givenAnswer={givenAnswer}
-            disabled={disabledClass}
-            progress={progress}
-          />
-        </>
-      )}
-      {endGame && (
-        <div className={styles.container}>
-          <h3>
-            {count <= 0
-              ? //Unlucky msg will show even if Congrats end game, as timer not cleared:
-                `Unlucky! You ran out of time.`
-              : `Congratulations!`}
-          </h3>
-          <h2 className={styles.scoreTally}>{score} miles travelled</h2>
-          <AddScore score={score} addHighScore={addHighScore} />
+      <div className={styles.container}>
+        {loading && <h2>Loading...</h2>}
+        {started && (
+          <>
+            <p>Time left: {count} seconds</p>
+            <h2>
+              Question: {progress} / {totalQuestions}
+            </h2>
+            <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+            <Question
+              question={activeQuestion}
+              givenAnswer={givenAnswer}
+              disabled={disabledClass}
+              progress={progress}
+            />
+          </>
+        )}
+        {endGame && (
+          <>
+            <h3>
+              {count <= 0
+                ? //Unlucky msg will show even if Congrats end game, as timer not cleared:
+                  `Unlucky! You ran out of time.`
+                : `Congratulations!`}
+            </h3>
+            <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+            <AddScore score={score} addHighScore={addHighScore} />
 
-          <Link href='/' className={styles.btn}>
-            Home
-          </Link>
+            <Link href='/' className={styles.btn}>
+              Home
+            </Link>
 
-          <Link href='/scores' className={styles.btn}>
-            High Scores
-          </Link>
-        </div>
-      )}
+            <Link href='/scores' className={styles.btn}>
+              High Scores
+            </Link>
+          </>
+        )}
+      </div>
     </div>
   )
 }
