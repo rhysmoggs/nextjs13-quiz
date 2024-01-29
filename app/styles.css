@@ -44,7 +44,7 @@ main {
 
 h2 {
   font-size: 2.5rem;
-  margin: 2rem 0;
+  margin: 1.2rem 0;
 }
 
 @media (max-width: 700px) {
@@ -52,8 +52,7 @@ h2 {
     font: 75%;
   }
   h2 {
-    font-size: 75%;
-    margin: 1rem 0;
+    font-size: 80%;
   }
   p {
     font: 75%;

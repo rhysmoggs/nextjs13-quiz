@@ -57,7 +57,7 @@
   text-shadow: -1.5px 1px 1px rgb(0, 0, 0);
   font-weight: bold;
   letter-spacing: 0.3rem;
-  margin: 3rem 4rem;
+  margin: 2rem 3rem;
   background: rgb(187 148 133 / 60%);
   padding: 1rem;
   text-transform: uppercase;
@@ -219,12 +219,16 @@
   .logoArea {
     margin-bottom: 3rem;
   }
-
+  .container {
+    padding: 0.6rem;
+    justify-content: space-evenly;
+  }
   .scoreTally {
     font-size: 1.5em;
     margin: 1.5rem 2rem;
   }
   .howToText {
+    font-size: 12px;
     line-height: 35px;
   }
   .container {

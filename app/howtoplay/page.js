@@ -17,9 +17,8 @@ function HowToPlay() {
             <p>
               Every correct answer is another{' '}
               <span className={styles.goldBackground}>
-                2500 miles travelled
+                2500 miles travelled.
               </span>
-              .
             </p>
             <p>
               It takes{' '}
@@ -28,7 +27,7 @@ function HowToPlay() {
             </p>
             <p>
               See if you can travel to the top of the{' '}
-              <span className={styles.goldBackground}>High Scores list</span>!
+              <span className={styles.goldBackground}>High Scores list!</span>
             </p>
           </div>
         </div>
