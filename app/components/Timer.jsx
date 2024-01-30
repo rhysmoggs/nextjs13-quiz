@@ -2,7 +2,6 @@ const { useState, useEffect } = require('react')
 
 const Timer = () => {
   const [count, setCount] = useState(5)
-  console.log('external count: ', count)
 
   useEffect(() => {
     const intervalId = setInterval(() => {

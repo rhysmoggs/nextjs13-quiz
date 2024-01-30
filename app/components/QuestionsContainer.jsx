@@ -62,7 +62,6 @@ const QuestionsContainer = () => {
       //set end game logic here:
     } else {
       if (quizQuestions != undefined) {
-        console.log('quizQuestions: ', quizQuestions)
         const soloQuestion = quizQuestions[0]
         setActiveQuestion(soloQuestion)
         //remove question from set of questions:
