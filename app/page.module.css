@@ -185,6 +185,18 @@
   border: 1px solid black;
 }
 
+/* contact page */
+
+.contactList {
+  font-size: 4rem;
+  list-style-type: none;
+  display: flex;
+  letter-spacing: 3.5rem;
+  justify-content: center;
+  gap: 2em;
+  margin: 3rem;
+}
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
@@ -208,14 +220,12 @@
     height: 160px;
     width: 160px;
   }
-
   .span {
     font-size: 1.9rem;
     left: 20%;
     right: 20%;
     top: 22%;
   }
-
   .logoArea {
     margin-bottom: 3rem;
   }
@@ -252,7 +262,6 @@
     padding: 0.5rem 2rem;
     margin: 0.5rem;
   }
-
   .card p {
     font-size: 1rem;
   }
