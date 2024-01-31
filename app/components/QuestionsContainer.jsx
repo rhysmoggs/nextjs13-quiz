@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import GetQuizQs from '../api/GetQuizQs'
 import Question from './Question'
 import styles from '../page.module.css'
-import AddScore from './AddScore'
-import Link from 'next/link'
 import getEnvironment from '../getEnvironment.config.js'
+import EndGame from './EndGame'
+import Timer from './Timer'
 
 const QuestionsContainer = () => {
   const [quizQuestions, setQuizQuestions] = useState()
@@ -19,42 +19,6 @@ const QuestionsContainer = () => {
   const [disabledClass, setDisabledClass] = useState(false)
   const [count, setCount] = useState(5)
   // const [spinner, setSpinner] = useState(true)
-
-  //need to test and improve. need to clear as if statement does not currently clear interval and end game msg will alter from "congrats" to "time's up"
-
-  //set timer to countdown from 0 to 5 seconds and then End Game, unless answer is selected in that time frame, then clear:
-
-  // variable to store our intervalID
-  useEffect(() => {
-    const IntervId = setInterval(() => {
-      setCount((prevCount) => prevCount - 1)
-
-      if (count <= 0) {
-        setStarted(false)
-        setEndGame(true)
-        return
-      }
-      return () => clearInterval(IntervId)
-    }, 1000)
-    return () => clearInterval(IntervId)
-  }, [count])
-
-  // useEffect(() => {
-  //   // End Game if timer reaches 0:
-  //   if (count <= 0) {
-  //     setStarted(false)
-  //     setEndGame(true)
-  //     return
-  //   }
-
-  //   // Set up timer:
-  //   const timer = setInterval(() => {
-  //     setCount((prevCount) => prevCount - 1)
-  //   }, 1000)
-
-  //   // Clear timer history:
-  //   return () => clearInterval(timer)
-  // }, [count])
 
   //fetch api data:
   const getQuestions = async () => {
@@ -141,7 +105,7 @@ const QuestionsContainer = () => {
         {loading && <h2>Loading...</h2>}
         {started && (
           <>
-            <p>Time left: {count} seconds</p>
+            <Timer />
             <h2>
               Question: {progress} / {totalQuestions}
             </h2>
@@ -154,31 +118,7 @@ const QuestionsContainer = () => {
             />
           </>
         )}
-        {endGame && (
-          <>
-            <h3>
-              {count <= 0
-                ? `Unlucky! You ran out of time.`
-                : `Congratulations!`}
-            </h3>
-            {/* <h3>
-              {count <= 0
-                ? //Unlucky msg will show even if Congrats end game, as timer not cleared:
-                  `Unlucky! You ran out of time.`
-                : `Congratulations!`}
-            </h3> */}
-            <h2 className={styles.scoreTally}>{score} miles travelled</h2>
-            <AddScore score={score} addHighScore={addHighScore} />
-
-            <Link href='/' className={styles.btn}>
-              Home
-            </Link>
-
-            <Link href='/scores' className={styles.btn}>
-              High Scores
-            </Link>
-          </>
-        )}
+        {endGame && <EndGame score={score} count={count} />}
       </div>
     </div>
   )

@@ -1,4 +1,3 @@
-import styles from '../page.module.css'
 import Logo from '../components/Logo'
 import QuestionsContainer from '../components/QuestionsContainer'
 

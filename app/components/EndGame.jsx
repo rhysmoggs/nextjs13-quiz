@@ -5,10 +5,11 @@ import AddScore from './AddScore'
 import Link from 'next/link'
 import getEnvironment from '../getEnvironment.config.js'
 
-const EndGame = () => {
-  const [loading, setLoading] = useState(true)
+const EndGame = ({ score, count }) => {
+  // const [loading, setLoading] = useState(true)
   // const [score, setScore] = useState(0)
   // const [spinner, setSpinner] = useState(true)
+  console.log(count)
 
   const addHighScore = async (data) => {
     //function to fetch scores:
@@ -33,12 +34,9 @@ const EndGame = () => {
   return (
     <div className={styles.gameArea}>
       <div className={styles.container}>
-        {loading && <h2>Loading...</h2>}
+        {/* {loading && <h2>Loading...</h2>} */}
 
         <>
-          <h3>
-            {count <= 0 ? `Unlucky! You ran out of time.` : `Congratulations!`}
-          </h3>
           <h2 className={styles.scoreTally}>{score} miles travelled</h2>
           <AddScore score={score} addHighScore={addHighScore} />
 

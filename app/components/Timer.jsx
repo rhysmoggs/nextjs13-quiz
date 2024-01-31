@@ -1,3 +1,4 @@
+'use client'
 const { useState, useEffect } = require('react')
 
 const Timer = () => {
@@ -7,8 +8,9 @@ const Timer = () => {
     const intervalId = setInterval(() => {
       setCount((prevCount) => prevCount - 1)
     }, 1000)
+
     return () => clearInterval(intervalId)
-  }, [])
+  }, [count])
 
   return (
     <>
