@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import styles from '/app/page.module.css'
+import styles from '/app/scores/page.module.css'
 // import styles from './styles.css'
 
 const AddScore = ({ score, addHighScore }) => {
@@ -33,31 +33,31 @@ const AddScore = ({ score, addHighScore }) => {
   }
 
   return (
-    <div className={styles.formContainer}>
+    <>
       {!hiddenForm ? (
-        <form onSubmit={handleSubmit}>
-          <div className={styles.formInputs}>
-            <label>Username: </label>
+        <form className={styles.formContainer} onSubmit={handleSubmit}>
+          <div className={styles.inputContainer}>
             <input
+              className={styles.input}
               type='text'
+              placeholder='Enter username'
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          {/* dont really need to add score, as it will be displayed anyway: */}
-          <div className={styles.formInputs}>
-            <label>Score: </label>
-            <input type='text' value={score} readOnly />
-          </div>
-          <input
+
+          <button
+            className={styles.btn}
             type='submit'
             value={!submitting ? 'Save Score' : 'Submitting...'}
-          />
+          >
+            Save Score
+          </button>
         </form>
       ) : (
         <p>Successfully added!</p>
       )}
-    </div>
+    </>
   )
 }
 

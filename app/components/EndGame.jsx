@@ -1,5 +1,4 @@
 'use client'
-import { useState } from 'react'
 import styles from '../page.module.css'
 import AddScore from './AddScore'
 import Link from 'next/link'
@@ -36,10 +35,9 @@ const EndGame = ({ score, count }) => {
       <div className={styles.container}>
         {/* {loading && <h2>Loading...</h2>} */}
 
+        <h2 className={styles.scoreTally}>{score} miles travelled</h2>
+        <AddScore score={score} addHighScore={addHighScore} />
         <>
-          <h2 className={styles.scoreTally}>{score} miles travelled</h2>
-          <AddScore score={score} addHighScore={addHighScore} />
-
           <Link href='/' className={styles.btn}>
             Home
           </Link>

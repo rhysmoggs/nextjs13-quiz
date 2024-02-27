@@ -7,7 +7,7 @@ const ScoreContainer = async () => {
   const scoreData = await getDataFromAPI()
   return (
     <div className={styles.scoreContainer}>
-      {scoreData.items.map((score) => {
+      {scoreData?.items?.map((score) => {
         return <Score key={score.id} {...score} />
       })}
     </div>
