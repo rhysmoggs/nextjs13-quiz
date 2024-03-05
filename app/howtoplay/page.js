@@ -1,5 +1,6 @@
 import styles from '../page.module.css'
 import Logo from '../components/Logo'
+import Link from 'next/link'
 
 function HowToPlay() {
   return (
@@ -7,7 +8,11 @@ function HowToPlay() {
       <Logo />
       <div className={styles.gameArea}>
         <div className={styles.container}>
-          <h1>How to Play</h1>
+          {/* <h1>How to Play</h1> */}
+
+          <Link href='/' className={styles.btn}>
+            Home
+          </Link>
 
           <div className={styles.howToText}>
             <p>You have 10 questions to travel the world.</p>

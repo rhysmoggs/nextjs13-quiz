@@ -42,7 +42,10 @@ const EndGame = ({ score, count }) => {
             Home
           </Link>
 
-          <Link href='/scores' className={styles.btn}>
+          <Link
+            href='/scores'
+            className={`${styles.btn} ${styles.cardCorrect}`}
+          >
             High Scores
           </Link>
         </>

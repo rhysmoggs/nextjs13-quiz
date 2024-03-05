@@ -111,10 +111,6 @@
   cursor: pointer;
 }
 
-.cardCorrect {
-  background: rgb(255, 210, 0);
-}
-
 .cardIncorrect {
   background: red;
 }
@@ -146,6 +142,10 @@
   border-radius: 6px;
   border: 1px solid black;
   align-items: center;
+}
+
+.cardCorrect {
+  background: rgb(255, 210, 0);
 }
 
 .btn:hover {

@@ -8,6 +8,7 @@ import {
   FaYoutube,
   FaCopyright,
 } from 'react-icons/fa6'
+import Link from 'next/link'
 
 function Contact() {
   return (
@@ -15,7 +16,12 @@ function Contact() {
       <Logo />
       <div className={styles.gameArea}>
         <div className={styles.container}>
-          <h1>Contact Form & Info:</h1>
+          {/* <h1>Contact Form & Info:</h1> */}
+
+          <Link href='/' className={styles.btn}>
+            Home
+          </Link>
+
           <div>
             <ul className={styles.contactList}>
               <li>
